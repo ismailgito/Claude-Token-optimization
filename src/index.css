@@ -1,0 +1,101 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    @apply bg-slate-950 text-slate-100;
+  }
+
+  ::-webkit-scrollbar {
+    @apply w-2 h-2;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-slate-900;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-slate-700 rounded-full hover:bg-slate-600;
+  }
+}
+
+@layer components {
+  .glass-card {
+    @apply bg-slate-900/70 backdrop-blur-xl border border-slate-800/50 rounded-2xl shadow-xl;
+  }
+
+  .glass-card-hover {
+    @apply glass-card hover:border-indigo-500/30 hover:shadow-indigo-500/5 transition-all duration-300;
+  }
+
+  .gradient-text {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 via-purple-400 to-cyan-400;
+  }
+
+  .gradient-border {
+    @apply relative;
+  }
+
+  .gradient-border::before {
+    content: '';
+    @apply absolute -inset-[1px] rounded-2xl bg-gradient-to-r from-indigo-500 via-purple-500 to-cyan-500 opacity-20 blur-sm;
+  }
+
+  .btn-primary {
+    @apply px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 
+           text-white font-semibold rounded-xl transition-all duration-200 
+           shadow-lg shadow-indigo-500/25 hover:shadow-indigo-500/40 
+           active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100;
+  }
+
+  .btn-secondary {
+    @apply px-6 py-3 bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold 
+           rounded-xl border border-slate-700 transition-all duration-200 
+           active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100;
+  }
+
+  .file-drop-zone {
+    @apply border-2 border-dashed border-slate-700 rounded-2xl p-12 text-center 
+           transition-all duration-300 cursor-pointer
+           hover:border-indigo-500/50 hover:bg-indigo-500/5;
+  }
+
+  .file-drop-zone.active {
+    @apply border-indigo-400 bg-indigo-500/10 scale-[1.02];
+  }
+
+  .stat-card {
+    @apply glass-card p-6 flex flex-col items-center gap-2;
+  }
+
+  .stat-value {
+    @apply text-3xl font-bold gradient-text;
+  }
+
+  .stat-label {
+    @apply text-sm text-slate-400 font-medium;
+  }
+
+  .markdown-body {
+    @apply prose prose-invert prose-indigo max-w-none;
+  }
+
+  .markdown-body pre {
+    @apply bg-slate-800 border border-slate-700 rounded-xl overflow-x-auto;
+  }
+
+  .markdown-body code {
+    @apply text-indigo-300 bg-slate-800 px-1.5 py-0.5 rounded-md text-sm;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
