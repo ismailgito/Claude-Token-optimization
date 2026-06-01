@@ -1,27 +1,44 @@
-import { Sparkles, Github } from 'lucide-react';
+import { Sparkles, Github, Menu, Moon, Sun, LogOut, User as UserIcon } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { supabase } from '../lib/supabase';
+import AuthModal from './AuthModal';
 
-export default function Header() {
+export default function Header({ isDark, toggleTheme, openAuthModal }) {
+  const [session, setSession] = useState(null);
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+    });
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+  };
+
   return (
-    <header className="relative z-10">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+    <header className="sticky top-0 z-50 bg-claude-bg/80 dark:bg-claude-darkBg/80 backdrop-blur-md border-b border-claude-border dark:border-claude-darkBorder transition-colors duration-300">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="relative">
-              <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-xl blur-md opacity-70" />
-              <div className="relative bg-slate-900 p-2.5 rounded-xl border border-slate-700/50">
-                <Sparkles className="w-6 h-6 text-indigo-400" />
-              </div>
+          <div className="flex items-center gap-2">
+            <div className="bg-claude-accent p-1.5 rounded-lg shadow-sm">
+              <Sparkles className="w-5 h-5 text-white" />
             </div>
             <div>
-              <h1 className="text-xl font-bold gradient-text">Token Optimizer</h1>
-              <p className="text-xs text-slate-500 -mt-0.5">File → Markdown Converter</p>
+              <h1 className="text-lg font-serif font-bold text-claude-text dark:text-claude-darkText tracking-tight">TokenOptimizer</h1>
             </div>
           </div>
 
-          <nav className="flex items-center gap-4">
+          <nav className="hidden md:flex items-center gap-8">
             <a
               href="#how-it-works"
-              className="text-sm text-slate-400 hover:text-slate-200 transition-colors"
+              className="text-sm font-medium text-claude-muted dark:text-claude-darkMuted hover:text-claude-accent transition-colors"
             >
               How it works
             </a>
@@ -29,12 +46,69 @@ export default function Header() {
               href="https://github.com/Mirza-Glitch/markitdown-js"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-1.5 text-sm text-slate-400 hover:text-slate-200 transition-colors"
+              className="flex items-center gap-2 text-sm font-medium text-claude-muted dark:text-claude-darkMuted hover:text-claude-accent transition-colors"
             >
               <Github className="w-4 h-4" />
-              <span className="hidden sm:inline">GitHub</span>
+              <span>GitHub</span>
             </a>
           </nav>
+
+          <div className="flex items-center gap-3">
+            <button
+              onClick={toggleTheme}
+              className="p-2 text-claude-muted dark:text-claude-darkMuted hover:bg-white dark:hover:bg-claude-darkSecondary rounded-lg transition-all"
+              aria-label="Toggle theme"
+            >
+              {isDark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+            </button>
+
+            <div className="flex items-center gap-2">
+              {session ? (
+                <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-2 px-3 py-1.5 bg-claude-bg dark:bg-claude-darkBg border border-claude-border dark:border-claude-darkBorder rounded-full">
+                    {session.user.user_metadata?.avatar_url ? (
+                      <img 
+                        src={session.user.user_metadata.avatar_url} 
+                        alt="Profile" 
+                        className="w-5 h-5 rounded-full"
+                      />
+                    ) : (
+                      <UserIcon className="w-4 h-4 text-claude-muted" />
+                    )}
+                    <span className="text-xs font-medium text-claude-text dark:text-claude-darkText max-w-[100px] truncate">
+                      {session.user.user_metadata?.full_name || session.user.email}
+                    </span>
+                  </div>
+                  <button 
+                    onClick={handleLogout}
+                    className="p-2 text-claude-muted hover:text-red-500 transition-colors"
+                    title="Log Out"
+                  >
+                    <LogOut className="w-5 h-5" />
+                  </button>
+                </div>
+              ) : (
+                <>
+                  <button 
+                    onClick={() => openAuthModal('login')}
+                    className="text-sm font-medium text-claude-muted dark:text-claude-darkMuted hover:text-claude-accent transition-colors px-3 py-2"
+                  >
+                    Log In
+                  </button>
+                  <button 
+                    onClick={() => openAuthModal('signup')}
+                    className="text-sm font-medium bg-claude-accent text-white px-4 py-2 rounded-lg hover:bg-claude-accent/90 transition-colors"
+                  >
+                    Sign Up
+                  </button>
+                </>
+              )}
+            </div>
+
+            <button className="md:hidden p-2 text-claude-muted dark:text-claude-darkMuted hover:bg-white dark:hover:bg-claude-darkSecondary rounded-lg transition-colors">
+              <Menu className="w-5 h-5" />
+            </button>
+          </div>
         </div>
       </div>
     </header>

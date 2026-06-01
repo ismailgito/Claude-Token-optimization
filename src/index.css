@@ -8,7 +8,11 @@
   }
   
   body {
-    @apply bg-slate-950 text-slate-100;
+    @apply bg-claude-bg text-claude-text font-claude antialiased transition-colors duration-300;
+  }
+
+  .dark body {
+    @apply bg-claude-darkBg text-claude-darkText;
   }
 
   ::-webkit-scrollbar {
@@ -16,81 +20,118 @@
   }
 
   ::-webkit-scrollbar-track {
-    @apply bg-slate-900;
+    @apply bg-transparent;
   }
 
   ::-webkit-scrollbar-thumb {
-    @apply bg-slate-700 rounded-full hover:bg-slate-600;
+    @apply bg-claude-border rounded-full hover:bg-claude-muted/30;
+  }
+
+  .dark ::-webkit-scrollbar-thumb {
+    @apply bg-claude-darkBorder hover:bg-claude-darkMuted/30;
   }
 }
 
 @layer components {
-  .glass-card {
-    @apply bg-slate-900/70 backdrop-blur-xl border border-slate-800/50 rounded-2xl shadow-xl;
+  .claude-card {
+    @apply bg-claude-card border border-claude-border rounded-2xl shadow-sm transition-colors duration-300;
   }
 
-  .glass-card-hover {
-    @apply glass-card hover:border-indigo-500/30 hover:shadow-indigo-500/5 transition-all duration-300;
+  .dark .claude-card {
+    @apply bg-claude-darkCard border-claude-darkBorder shadow-none;
   }
 
-  .gradient-text {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 via-purple-400 to-cyan-400;
+  .claude-card-hover {
+    @apply claude-card hover:border-claude-accent/30 hover:shadow-md transition-all duration-300;
   }
 
-  .gradient-border {
-    @apply relative;
+  .btn-claude-primary {
+    @apply px-6 py-2.5 bg-claude-accent hover:bg-claude-accent/90 text-white font-medium rounded-full transition-all duration-200 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed;
   }
 
-  .gradient-border::before {
-    content: '';
-    @apply absolute -inset-[1px] rounded-2xl bg-gradient-to-r from-indigo-500 via-purple-500 to-cyan-500 opacity-20 blur-sm;
+  .btn-claude-secondary {
+    @apply px-6 py-2.5 bg-white hover:bg-claude-bg text-claude-text font-medium rounded-full border border-claude-border transition-all duration-200 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed;
   }
 
-  .btn-primary {
-    @apply px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 
-           text-white font-semibold rounded-xl transition-all duration-200 
-           shadow-lg shadow-indigo-500/25 hover:shadow-indigo-500/40 
-           active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100;
+  .dark .btn-claude-secondary {
+    @apply bg-claude-darkSecondary hover:bg-claude-darkBorder text-claude-darkText border-claude-darkBorder;
   }
 
-  .btn-secondary {
-    @apply px-6 py-3 bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold 
-           rounded-xl border border-slate-700 transition-all duration-200 
-           active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100;
+  .claude-input {
+    @apply w-full px-4 py-3 bg-white border border-claude-border rounded-xl focus:outline-none focus:ring-2 focus:ring-claude-accent/20 focus:border-claude-accent transition-all;
   }
 
-  .file-drop-zone {
-    @apply border-2 border-dashed border-slate-700 rounded-2xl p-12 text-center 
-           transition-all duration-300 cursor-pointer
-           hover:border-indigo-500/50 hover:bg-indigo-500/5;
+  .dark .claude-input {
+    @apply bg-claude-darkCard border-claude-darkBorder text-claude-darkText;
   }
 
-  .file-drop-zone.active {
-    @apply border-indigo-400 bg-indigo-500/10 scale-[1.02];
+  .file-drop-zone-claude {
+    @apply border-2 border-dashed border-claude-border rounded-2xl p-12 text-center 
+           transition-all duration-300 cursor-pointer bg-white/50
+           hover:border-claude-accent/50 hover:bg-white;
   }
 
-  .stat-card {
-    @apply glass-card p-6 flex flex-col items-center gap-2;
+  .dark .file-drop-zone-claude {
+    @apply border-claude-darkBorder bg-claude-darkCard/50 hover:bg-claude-darkCard hover:border-claude-accent/50;
   }
 
-  .stat-value {
-    @apply text-3xl font-bold gradient-text;
+  .file-drop-zone-claude.active {
+    @apply border-claude-accent bg-white scale-[1.01];
   }
 
-  .stat-label {
-    @apply text-sm text-slate-400 font-medium;
+  .dark .file-drop-zone-claude.active {
+    @apply bg-claude-darkCard;
   }
 
-  .markdown-body {
-    @apply prose prose-invert prose-indigo max-w-none;
+  .stat-card-claude {
+    @apply claude-card p-6 flex flex-col items-center gap-1;
   }
 
-  .markdown-body pre {
-    @apply bg-slate-800 border border-slate-700 rounded-xl overflow-x-auto;
+  .stat-value-claude {
+    @apply text-3xl font-bold text-claude-accent;
   }
 
-  .markdown-body code {
-    @apply text-indigo-300 bg-slate-800 px-1.5 py-0.5 rounded-md text-sm;
+  .stat-label-claude {
+    @apply text-sm text-claude-muted font-medium;
+  }
+
+  .dark .stat-label-claude {
+    @apply text-claude-darkMuted;
+  }
+
+  .markdown-body-claude {
+    @apply prose prose-slate max-w-none transition-colors duration-300;
+  }
+
+  .dark .markdown-body-claude {
+    @apply prose-invert;
+  }
+
+  .markdown-body-claude pre {
+    @apply bg-claude-secondary border border-claude-border rounded-xl overflow-x-auto p-4;
+  }
+
+  .dark .markdown-body-claude pre {
+    @apply bg-claude-darkSecondary border-claude-darkBorder;
+  }
+
+  .markdown-body-claude code {
+    @apply text-claude-accent bg-claude-secondary px-1.5 py-0.5 rounded-md text-sm font-medium;
+  }
+
+  .dark .markdown-body-claude code {
+    @apply bg-claude-darkSecondary;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 

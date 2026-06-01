@@ -1,126 +1,183 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import Header from './components/Header';
 import FileUploader from './components/FileUploader';
 import OptimizationSummary from './components/OptimizationSummary';
 import MarkdownPreview from './components/MarkdownPreview';
 import HowItWorks from './components/HowItWorks';
+import AuthModal from './components/AuthModal';
 import useFileConversion from './hooks/useFileConversion';
-import { ArrowDown, Sparkles, Shield, FileText, Zap } from 'lucide-react';
+import useUsage from './hooks/useUsage';
+import { Sparkles, Shield, FileText, Zap } from 'lucide-react';
 
 function App() {
   const { state, convertFile, reset } = useFileConversion();
+  const { isLimitReached, incrementUsage, isSignedIn, usageCount, limit } = useUsage();
   const [showResults, setShowResults] = useState(false);
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const [authModalView, setAuthModalView] = useState('login');
+  const [isDark, setIsDark] = useState(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('theme');
+      return saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches);
+    }
+    return false;
+  });
+
+  useEffect(() => {
+    const root = window.document.documentElement;
+    if (isDark) {
+      root.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
+    } else {
+      root.classList.remove('dark');
+      localStorage.setItem('theme', 'light');
+    }
+  }, [isDark]);
+
+  const toggleTheme = useCallback(() => {
+    setIsDark(prev => !prev);
+  }, []);
 
   const handleFileSelect = useCallback((file) => {
+    if (isLimitReached) {
+      setAuthModalView('signup');
+      setIsAuthModalOpen(true);
+      return;
+    }
+    
     setShowResults(true);
     convertFile(file);
-  }, [convertFile]);
+    incrementUsage();
+  }, [convertFile, isLimitReached, incrementUsage]);
 
   const handleReset = useCallback(() => {
     reset();
     setShowResults(false);
   }, [reset]);
 
+  const openAuthModal = useCallback((view = 'login') => {
+    setAuthModalView(view);
+    setIsAuthModalOpen(true);
+  }, []);
+
   return (
-    <div className="min-h-screen bg-slate-950 relative overflow-hidden">
-      {/* Background effects */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-40 -left-40 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl" />
-        <div className="absolute -bottom-40 -right-40 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-cyan-500/5 rounded-full blur-3xl" />
-      </div>
+    <div className="min-h-screen bg-claude-bg dark:bg-claude-darkBg selection:bg-claude-accent/20 transition-colors duration-300">
+      <Header 
+        isDark={isDark} 
+        toggleTheme={toggleTheme} 
+        openAuthModal={openAuthModal}
+      />
 
-      <div className="relative z-10">
-        <Header />
-
-        <main className="px-4 sm:px-6 lg:px-8 pb-20">
-          {/* Hero section */}
-          {!showResults && (
-            <section className="max-w-4xl mx-auto pt-16 sm:pt-24 pb-12 text-center">
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-indigo-500/10 rounded-full border border-indigo-500/20 mb-6 animate-[fadeInUp_0.6s_ease-out]">
-                <Sparkles className="w-4 h-4 text-indigo-400" />
-                <span className="text-xs font-medium text-indigo-300">Token Optimization Tool</span>
-              </div>
-
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-balance leading-tight mb-6 animate-[fadeInUp_0.6s_ease-out_0.1s_both]">
-                Convert Files to{' '}
-                <span className="gradient-text">Token-Efficient</span>{' '}
-                Markdown
-              </h1>
-
-              <p className="text-lg sm:text-xl text-slate-400 max-w-2xl mx-auto text-balance mb-10 animate-[fadeInUp_0.6s_ease-out_0.2s_both]">
-                PDFs, Word docs, spreadsheets, code, and more — converted into clean, 
-                LLM-optimized markdown. Reduce token usage and save on API costs.
-              </p>
-
-              {/* Feature badges */}
-              <div className="flex flex-wrap justify-center gap-3 mb-12 animate-[fadeInUp_0.6s_ease-out_0.3s_both]">
-                {[
-                  { icon: Zap, text: 'Reduce token count', color: 'text-amber-400 bg-amber-500/10' },
-                  { icon: Shield, text: '100% client-side', color: 'text-emerald-400 bg-emerald-500/10' },
-                  { icon: FileText, text: '10+ formats supported', color: 'text-blue-400 bg-blue-500/10' },
-                ].map(({ icon: Icon, text, color }) => (
-                  <span key={text} className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium ${color}`}>
-                    <Icon className="w-3.5 h-3.5" />
-                    {text}
-                  </span>
-                ))}
-              </div>
-
-              {/* Scroll indicator */}
-              <div className="animate-bounce mt-8">
-                <ArrowDown className="w-5 h-5 text-slate-600 mx-auto" />
-              </div>
-            </section>
-          )}
-
-          {/* Upload section */}
-          <section className={`${showResults ? 'pt-8' : 'pb-16'}`}>
-            <FileUploader
-              onFileSelect={handleFileSelect}
-              status={state.status}
-              fileName={state.file?.name}
-              onReset={handleReset}
-            />
-          </section>
-
-          {/* Results section */}
-          {showResults && state.status !== 'idle' && (
-            <section className="space-y-8 pt-4 pb-16">
-              {/* Stats */}
-              {state.stats && <OptimizationSummary stats={state.stats} />}
-
-              {/* Markdown preview */}
-              {state.markdown && (
-                <MarkdownPreview
-                  markdown={state.markdown}
-                  fileName={state.file?.name}
-                />
-              )}
-
-              {/* Error display */}
-              {state.status === 'error' && (
-                <div className="max-w-3xl mx-auto glass-card p-6 text-center">
-                  <p className="text-red-400 font-medium mb-2">Conversion Error</p>
-                  <p className="text-sm text-slate-400">{state.error}</p>
-                </div>
-              )}
-            </section>
-          )}
-
-          {/* How it works section */}
-          {!showResults && <HowItWorks />}
-        </main>
-
-        {/* Footer */}
-        <footer className="border-t border-slate-800/50 py-8 px-4">
-          <div className="max-w-7xl mx-auto text-center">
-            <p className="text-xs text-slate-600">
-              Built with React + Tailwind CSS. File conversion happens entirely in your browser — nothing is uploaded to any server.
+      <main className="px-4 sm:px-6 lg:px-8 pb-20">
+        {/* Usage banner for guests */}
+        {!isSignedIn && !showResults && (
+          <div className="max-w-4xl mx-auto mt-4 text-center">
+            <p className="text-xs font-medium text-claude-muted dark:text-claude-darkMuted bg-white/50 dark:bg-claude-darkCard/50 py-2 px-4 rounded-full inline-block border border-claude-border dark:border-claude-darkBorder">
+              Guest mode: {Math.max(0, limit - usageCount)} free conversions remaining. <button onClick={() => openAuthModal('signup')} className="text-claude-accent hover:underline ml-1 font-semibold">Sign up for unlimited access</button>
             </p>
           </div>
-        </footer>
-      </div>
+        )}
+
+        {/* Hero section */}
+        {!showResults && (
+          <section className="max-w-4xl mx-auto pt-16 sm:pt-28 pb-12 text-center">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-claude-accent/10 rounded-full border border-claude-accent/20 mb-8 animate-fade-in">
+              <Sparkles className="w-4 h-4 text-claude-accent" />
+              <span className="text-xs font-semibold text-claude-accent uppercase tracking-wider">Token Optimization</span>
+            </div>
+
+            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-serif font-medium text-claude-text dark:text-claude-darkText leading-[1.1] mb-8 animate-fade-in [animation-delay:100ms]">
+              Convert files to <br />
+              <span className="text-claude-accent">Markdown</span>
+            </h1>
+
+            <p className="text-xl sm:text-2xl text-claude-muted dark:text-claude-darkMuted max-w-2xl mx-auto text-balance mb-12 animate-fade-in [animation-delay:200ms] font-light">
+              PDFs, documents, and code — converted into clean, 
+              LLM-optimized markdown. Ready for Claude, ChatGPT, and beyond.
+            </p>
+
+            {/* Feature badges */}
+            <div className="flex flex-wrap justify-center gap-4 mb-16 animate-fade-in [animation-delay:300ms]">
+              {[
+                { icon: Zap, text: 'Token efficient', color: 'text-claude-text dark:text-claude-darkText bg-white dark:bg-claude-darkCard border-claude-border dark:border-claude-darkBorder' },
+                { icon: Shield, text: 'Private & Secure', color: 'text-claude-text dark:text-claude-darkText bg-white dark:bg-claude-darkCard border-claude-border dark:border-claude-darkBorder' },
+                { icon: FileText, text: '10+ Formats', color: 'text-claude-text dark:text-claude-darkText bg-white dark:bg-claude-darkCard border-claude-border dark:border-claude-darkBorder' },
+              ].map(({ icon: Icon, text, color }) => (
+                <span key={text} className={`inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium border shadow-sm ${color}`}>
+                  <Icon className="w-4 h-4 text-claude-accent" />
+                  {text}
+                </span>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {/* Upload section */}
+        <section className={`${showResults ? 'pt-8' : 'pb-16'} max-w-4xl mx-auto`}>
+          <FileUploader
+            onFileSelect={handleFileSelect}
+            status={state.status}
+            fileName={state.file?.name}
+            onReset={handleReset}
+            file={state.file}
+            progress={state.progress}
+          />
+        </section>
+
+        {/* Results section */}
+        {showResults && state.status !== 'idle' && (
+          <section className="space-y-12 pt-4 pb-16 max-w-5xl mx-auto">
+            {/* Stats */}
+            {state.stats && <OptimizationSummary stats={state.stats} />}
+
+            {/* Markdown preview */}
+            {state.markdown && (
+              <MarkdownPreview
+                markdown={state.markdown}
+                fileName={state.file?.name}
+              />
+            )}
+
+            {/* Error display */}
+            {state.status === 'error' && (
+              <div className="max-w-3xl mx-auto claude-card p-8 text-center animate-fade-in">
+                <p className="text-red-600 font-semibold mb-2 text-lg">Conversion Error</p>
+                <p className="text-claude-muted dark:text-claude-darkMuted">{state.error}</p>
+                <button 
+                  onClick={handleReset}
+                  className="mt-6 btn-claude-secondary"
+                >
+                  Try another file
+                </button>
+              </div>
+            )}
+          </section>
+        )}
+
+        {/* How it works section */}
+        {!showResults && <HowItWorks />}
+      </main>
+
+      <AuthModal 
+        isOpen={isAuthModalOpen} 
+        onClose={() => setIsAuthModalOpen(false)} 
+        view={authModalView}
+        setView={setAuthModalView}
+      />
+
+      {/* Footer */}
+      <footer className="border-t border-claude-border dark:border-claude-darkBorder py-12 px-4 bg-white/50 dark:bg-claude-darkCard/50">
+        <div className="max-w-7xl mx-auto text-center">
+          <p className="text-sm text-claude-muted dark:text-claude-darkMuted">
+            Built for efficiency. All processing happens locally in your browser.
+          </p>
+          <div className="mt-4 flex justify-center gap-6">
+            <span className="text-xs text-claude-muted/60 dark:text-claude-darkMuted/60 hover:text-claude-accent cursor-pointer transition-colors">Privacy Policy</span>
+            <span className="text-xs text-claude-muted/60 dark:text-claude-darkMuted/60 hover:text-claude-accent cursor-pointer transition-colors">Terms of Service</span>
+            <span className="text-xs text-claude-muted/60 dark:text-claude-darkMuted/60 hover:text-claude-accent cursor-pointer transition-colors">GitHub</span>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }

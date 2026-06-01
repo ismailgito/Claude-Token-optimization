@@ -10,23 +10,23 @@ import {
   Loader2,
   X,
   CheckCircle2,
+  Paperclip,
 } from 'lucide-react';
+import FileSizeWarning from './FileSizeWarning';
+import ProcessingProgress from './ProcessingProgress';
+import { MAX_FILE_SIZE } from '../utils/fileUtils';
 
 const SUPPORTED_TYPES = [
-  { ext: 'PDF', icon: FileText, color: 'text-red-400 bg-red-500/10' },
-  { ext: 'DOCX', icon: FileText, color: 'text-blue-400 bg-blue-500/10' },
-  { ext: 'XLSX', icon: FileSpreadsheet, color: 'text-emerald-400 bg-emerald-500/10' },
-  { ext: 'TXT', icon: FileText, color: 'text-slate-400 bg-slate-500/10' },
-  { ext: 'HTML', icon: FileCode, color: 'text-orange-400 bg-orange-500/10' },
-  { ext: 'MD', icon: FileText, color: 'text-purple-400 bg-purple-500/10' },
-  { ext: 'JSON', icon: FileCode, color: 'text-yellow-400 bg-yellow-500/10' },
-  { ext: 'CSV', icon: FileSpreadsheet, color: 'text-green-400 bg-green-500/10' },
-  { ext: 'IMG', icon: FileImage, color: 'text-pink-400 bg-pink-500/10' },
-  { ext: 'CODE', icon: File, color: 'text-cyan-400 bg-cyan-500/10' },
+  { ext: 'PDF', icon: FileText, color: 'text-claude-accent bg-claude-accent/5' },
+  { ext: 'DOCX', icon: FileText, color: 'text-claude-accent bg-claude-accent/5' },
+  { ext: 'XLSX', icon: FileSpreadsheet, color: 'text-claude-accent bg-claude-accent/5' },
+  { ext: 'TXT', icon: FileText, color: 'text-claude-accent bg-claude-accent/5' },
+  { ext: 'CODE', icon: FileCode, color: 'text-claude-accent bg-claude-accent/5' },
 ];
 
-export default function FileUploader({ onFileSelect, status, fileName, onReset }) {
+export default function FileUploader({ onFileSelect, status, fileName, onReset, file, progress }) {
   const [isDragActive, setIsDragActive] = useState(false);
+  const [oversizedFile, setOversizedFile] = useState(null);
   const inputRef = useRef(null);
 
   const handleDrag = useCallback((e) => {
@@ -46,13 +46,23 @@ export default function FileUploader({ onFileSelect, status, fileName, onReset }
     setIsDragActive(false);
   }, []);
 
+  const handleReset = useCallback(() => {
+    setOversizedFile(null);
+    onReset?.();
+  }, [onReset]);
+
   const handleDrop = useCallback((e) => {
     e.preventDefault();
     e.stopPropagation();
     setIsDragActive(false);
     const files = e.dataTransfer?.files;
     if (files?.length > 0) {
-      onFileSelect(files[0]);
+      if (files[0].size > MAX_FILE_SIZE) {
+        setOversizedFile(files[0]);
+      } else {
+        setOversizedFile(null);
+        onFileSelect(files[0]);
+      }
     }
   }, [onFileSelect]);
 
@@ -63,16 +73,20 @@ export default function FileUploader({ onFileSelect, status, fileName, onReset }
   const handleChange = (e) => {
     const files = e.target.files;
     if (files?.length > 0) {
-      onFileSelect(files[0]);
+      if (files[0].size > MAX_FILE_SIZE) {
+        setOversizedFile(files[0]);
+      } else {
+        setOversizedFile(null);
+        onFileSelect(files[0]);
+      }
     }
-    // Reset so user can select same file again
     e.target.value = '';
   };
 
   const isProcessing = status === 'converting';
 
   return (
-    <div className="w-full max-w-3xl mx-auto">
+    <div className="w-full">
       <div
         onClick={isProcessing ? undefined : handleClick}
         onDragEnter={isProcessing ? undefined : handleDragIn}
@@ -80,110 +94,95 @@ export default function FileUploader({ onFileSelect, status, fileName, onReset }
         onDragOver={isProcessing ? undefined : handleDrag}
         onDrop={isProcessing ? undefined : handleDrop}
         className={`
-          relative overflow-hidden rounded-2xl transition-all duration-500 cursor-pointer
-          ${isProcessing ? 'cursor-default pointer-events-none' : ''}
+          relative overflow-hidden transition-all duration-300
+          ${isProcessing ? 'cursor-default pointer-events-none' : 'cursor-pointer'}
           ${status === 'done' || status === 'error'
-            ? 'border-2 border-slate-700/50 bg-slate-900/50 backdrop-blur-sm p-6'
-            : `file-drop-zone ${isDragActive ? 'active scale-[1.01]' : 'bg-slate-900/30'}`}
+            ? 'claude-card p-6 shadow-md'
+            : `file-drop-zone-claude ${isDragActive ? 'active' : ''}`}
         `}
       >
-        {/* Animated gradient background when idle */}
-        {status === 'idle' && (
-          <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/5 via-purple-500/5 to-cyan-500/5 animate-pulse-slow" />
-        )}
-
         {/* Success state */}
         {status === 'done' && (
-          <div className="flex items-center gap-4">
-            <div className="p-3 bg-emerald-500/10 rounded-xl">
-              <CheckCircle2 className="w-8 h-8 text-emerald-400" />
+          <div className="flex items-center gap-5">
+            <div className="p-3 bg-green-50 dark:bg-green-900/20 rounded-xl">
+              <CheckCircle2 className="w-8 h-8 text-green-600 dark:text-green-500" />
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-medium text-slate-200 truncate">{fileName}</p>
-              <p className="text-xs text-emerald-400 mt-0.5">File processed successfully</p>
+              <p className="text-base font-semibold text-claude-text dark:text-claude-darkText truncate">{fileName}</p>
+              <p className="text-sm text-green-600 dark:text-green-500 mt-0.5">Ready for optimization</p>
             </div>
             <button
-              onClick={(e) => { e.stopPropagation(); onReset?.(); }}
-              className="p-2 hover:bg-slate-800 rounded-lg transition-colors"
+              onClick={(e) => { e.stopPropagation(); handleReset(); }}
+              className="p-2 hover:bg-claude-bg dark:hover:bg-claude-darkSecondary rounded-full transition-colors"
             >
-              <X className="w-5 h-5 text-slate-400 hover:text-slate-200" />
+              <X className="w-5 h-5 text-claude-muted dark:text-claude-darkMuted" />
             </button>
           </div>
         )}
 
         {/* Error state */}
         {status === 'error' && (
-          <div className="flex items-center gap-4">
-            <div className="p-3 bg-red-500/10 rounded-xl">
-              <AlertCircle className="w-8 h-8 text-red-400" />
+          <div className="flex items-center gap-5">
+            <div className="p-3 bg-red-50 dark:bg-red-900/20 rounded-xl">
+              <AlertCircle className="w-8 h-8 text-red-600 dark:text-red-500" />
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-medium text-red-300">Conversion failed</p>
-              <p className="text-xs text-red-400/80 mt-0.5 truncate">{fileName}</p>
+              <p className="text-base font-semibold text-red-600 dark:text-red-400">Failed to process</p>
+              <p className="text-sm text-red-500/80 dark:text-red-400/80 mt-0.5 truncate">{fileName}</p>
             </div>
             <button
-              onClick={(e) => { e.stopPropagation(); onReset?.(); }}
-              className="p-2 hover:bg-slate-800 rounded-lg transition-colors"
+              onClick={(e) => { e.stopPropagation(); handleReset(); }}
+              className="p-2 hover:bg-claude-bg dark:hover:bg-claude-darkSecondary rounded-full transition-colors"
             >
-              <X className="w-5 h-5 text-slate-400 hover:text-slate-200" />
+              <X className="w-5 h-5 text-claude-muted dark:text-claude-darkMuted" />
             </button>
           </div>
         )}
 
         {/* Converting state */}
         {isProcessing && (
-          <div className="flex items-center gap-4">
-            <div className="p-3 bg-indigo-500/10 rounded-xl">
-              <Loader2 className="w-8 h-8 text-indigo-400 animate-spin" />
-            </div>
-            <div>
-              <p className="text-sm font-medium text-slate-200">Converting {fileName}...</p>
-              <div className="mt-2 flex gap-1">
-                {[0, 1, 2].map((i) => (
-                  <div
-                    key={i}
-                    className="w-2 h-2 bg-indigo-400 rounded-full animate-bounce"
-                    style={{ animationDelay: `${i * 0.15}s` }}
-                  />
-                ))}
+          <div className="flex items-center gap-6 py-4">
+            <div className="relative">
+              <div className="absolute inset-0 bg-claude-accent/20 rounded-full blur-md animate-pulse" />
+              <div className="relative p-3 bg-claude-accent/10 rounded-full">
+                <Loader2 className="w-8 h-8 text-claude-accent animate-spin" />
               </div>
+            </div>
+            <div className="flex-1">
+              <p className="text-lg font-medium text-claude-text dark:text-claude-darkText">Analyzing your file...</p>
+              <p className="text-sm text-claude-muted dark:text-claude-darkMuted mt-1">Extracting content from {fileName}</p>
             </div>
           </div>
         )}
 
-        {/* Idle state - the main upload prompt */}
+        {/* Idle state */}
         {status === 'idle' && (
-          <>
-            <div className="relative z-10 flex flex-col items-center gap-6">
-              <div className="relative">
-                <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full blur-xl opacity-30 animate-pulse-slow" />
-                <div className="relative p-5 bg-slate-900/80 rounded-full border border-slate-700/50">
-                  <Upload className="w-12 h-12 text-indigo-400" />
-                </div>
-              </div>
-              <div>
-                <p className="text-xl font-semibold text-slate-200">
-                  {isDragActive ? 'Drop your file here' : 'Drop a file here or click to browse'}
-                </p>
-                <p className="text-sm text-slate-500 mt-2">
-                  Convert PDF, DOCX, XLSX, HTML, JSON, CSV, code files & more to clean markdown
-                </p>
-              </div>
+          <div className="flex flex-col items-center gap-6 py-4">
+            <div className="p-4 bg-claude-bg dark:bg-claude-darkSecondary rounded-2xl shadow-inner group-hover:bg-white dark:group-hover:bg-claude-darkCard transition-colors">
+              <Paperclip className="w-10 h-10 text-claude-accent" />
+            </div>
+            <div className="text-center">
+              <p className="text-xl font-medium text-claude-text dark:text-claude-darkText">
+                {isDragActive ? 'Release to upload' : 'Click or drag file here'}
+              </p>
+              <p className="text-sm text-claude-muted dark:text-claude-darkMuted mt-2 max-w-sm mx-auto">
+                Upload PDFs, Word docs, spreadsheets, or code. 
+                Everything is processed locally in your browser.
+              </p>
             </div>
 
-            {/* Supported file types grid */}
-            <div className="relative z-10 mt-8 flex flex-wrap justify-center gap-2">
+            <div className="flex flex-wrap justify-center gap-3 mt-4">
               {SUPPORTED_TYPES.map(({ ext, icon: Icon, color }) => (
                 <span
                   key={ext}
-                  className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium ${color}`}
+                  className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold border border-claude-border dark:border-claude-darkBorder shadow-sm ${color}`}
                 >
                   <Icon className="w-3.5 h-3.5" />
                   {ext}
                 </span>
               ))}
             </div>
-          </>
+          </div>
         )}
 
         <input
@@ -194,6 +193,9 @@ export default function FileUploader({ onFileSelect, status, fileName, onReset }
           accept=".pdf,.docx,.doc,.xlsx,.xls,.csv,.tsv,.txt,.md,.markdown,.html,.htm,.json,.xml,.yaml,.yml,.js,.jsx,.ts,.tsx,.py,.rb,.java,.c,.cpp,.h,.hpp,.go,.rs,.swift,.kt,.php,.sh,.bash,.css,.scss,.less,.png,.jpg,.jpeg,.gif,.svg,.webp,.bmp,.ico,.log,.ini,.cfg,.env,.toml,.odt,.rtf,.ppt,.pptx,.ods,.odp"
         />
       </div>
+
+      <FileSizeWarning file={oversizedFile} onDismiss={() => setOversizedFile(null)} />
+      <ProcessingProgress file={file} status={status} progress={progress} />
     </div>
   );
 }
