@@ -2,9 +2,38 @@ import { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
 import { X, Mail, Lock, Sparkles, Loader2, Github, KeyRound } from 'lucide-react';
 
+const getErrorMessage = (err) => {
+  if (!err) return 'Unknown error occurred';
+  if (typeof err === 'string') return err;
+  
+  // Custom check for known status codes
+  if (err.status === 504 || err.status === 500) {
+    const detail = err.message || err.error_description || '';
+    return `Supabase Email / SMTP service failed (Status ${err.status}): ${detail || 'Gateway Timeout. This means Supabase timed out connecting to your Resend/SMTP email server. Please check your Supabase Auth SMTP provider settings.'}`;
+  }
+  if (err.status === 429) {
+    return 'Rate Limit Exceeded (Status 429): You have sent too many requests. Please configure or verify your custom SMTP configuration (e.g. Resend) in your Supabase Dashboard to remove these limits.';
+  }
+  
+  if (err.message) return err.message;
+  if (err.error_description) return err.error_description;
+  if (err.error && typeof err.error === 'string') return err.error;
+  
+  const str = err.toString ? err.toString() : '';
+  if (str && str !== '[object Object]') return str;
+  
+  try {
+    const json = JSON.stringify(err);
+    if (json && json !== '{}') return json;
+  } catch (e) {}
+  
+  return 'Unknown connection or service error. Check your Supabase configuration and credentials.';
+};
+
 export default function AuthModal({ isOpen, onClose, view, setView }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [otpCode, setOtpCode] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -32,7 +61,7 @@ export default function AuthModal({ isOpen, onClose, view, setView }) {
       });
       if (error) throw error;
     } catch (err) {
-      setError(err.message);
+      setError(getErrorMessage(err));
       setLoading(false);
     }
   };
@@ -62,14 +91,7 @@ export default function AuthModal({ isOpen, onClose, view, setView }) {
       setResendTimer(60);
     } catch (err) {
       console.error('Caught Error in handleSignUp:', err);
-      // Handle the case where the error object might be empty or missing message
-      const errorMessage = err.message || err.error_description || (typeof err === 'object' ? JSON.stringify(err) : 'Unknown error occurred');
-      
-      if (errorMessage.includes('rate_limit') || errorMessage.includes('error sending')) {
-        setError('Supabase Email Limit: Even with SMTP, there may be a rate limit in Supabase settings. Please check your Auth > Rate Limits in Supabase dashboard.');
-      } else {
-        setError(`Error: ${errorMessage === '{}' ? 'Authentication service failed. Check your Supabase/Resend configuration.' : errorMessage}`);
-      }
+      setError(getErrorMessage(err));
     } finally {
       setLoading(false);
     }
@@ -81,23 +103,67 @@ export default function AuthModal({ isOpen, onClose, view, setView }) {
     setLoading(true);
     setError(null);
     try {
-      const { error } = await supabase.auth.verifyOtp({
+      // 1. Try 'email' type (standard for signInWithOtp)
+      let result = await supabase.auth.verifyOtp({
         email,
         token: otpCode,
-        type: 'magiclink', // Standard type for OTP/Magiclink
+        type: 'email',
+      });
+      let error = result.error;
+
+      // 2. Try 'signup' type fallback (if user is new and Supabase expects signup verification)
+      if (error) {
+        console.warn('verifyOtp with type "email" failed, trying fallback to "signup"...');
+        const signupFallback = await supabase.auth.verifyOtp({
+          email,
+          token: otpCode,
+          type: 'signup',
+        });
+        error = signupFallback.error;
+      }
+
+      // 3. Try 'magiclink' type fallback
+      if (error) {
+        console.warn('verifyOtp with type "signup" failed, trying fallback to "magiclink"...');
+        const magiclinkFallback = await supabase.auth.verifyOtp({
+          email,
+          token: otpCode,
+          type: 'magiclink',
+        });
+        error = magiclinkFallback.error;
+      }
+
+      if (error) throw error;
+
+      // OTP was correct and session is active. Move to Set Password screen.
+      setView('set-password');
+    } catch (err) {
+      setError(getErrorMessage(err));
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSetPassword = async (e) => {
+    e.preventDefault();
+    if (loading) return;
+    if (password !== confirmPassword) {
+      setError('Passwords do not match.');
+      return;
+    }
+    setLoading(true);
+    setError(null);
+    try {
+      const { error } = await supabase.auth.updateUser({
+        password: password
       });
 
       if (error) throw error;
       
+      // Successfully registered and password set! Close modal.
       onClose();
     } catch (err) {
-      if (err.message?.includes('rate_limit')) {
-        setError('Too many verification attempts. Please wait a moment.');
-      } else if (err.message?.includes('Token has expired') || err.message?.includes('otp_expired')) {
-        setError('Code expired. Please request a new one.');
-      } else {
-        setError(err.message);
-      }
+      setError(getErrorMessage(err));
     } finally {
       setLoading(false);
     }
@@ -113,11 +179,7 @@ export default function AuthModal({ isOpen, onClose, view, setView }) {
       if (error) throw error;
       onClose();
     } catch (err) {
-      if (err.message?.includes('rate_limit')) {
-        setError('Too many requests. Please wait a moment before trying again.');
-      } else {
-        setError(err.message);
-      }
+      setError(getErrorMessage(err));
     } finally {
       setLoading(false);
     }
@@ -142,11 +204,13 @@ export default function AuthModal({ isOpen, onClose, view, setView }) {
             {view === 'login' && 'Welcome Back'}
             {view === 'signup' && 'Create Account'}
             {view === 'verify' && 'Check your email'}
+            {view === 'set-password' && 'Secure Your Account'}
           </h2>
           <p className="text-claude-muted dark:text-claude-darkMuted text-sm mt-1">
             {view === 'login' && 'Log in to continue using TokenOptimizer'}
-            {view === 'signup' && 'Sign up for unlimited file conversions'}
+            {view === 'signup' && 'We will send a verification code to your email'}
             {view === 'verify' && `Enter the code sent to ${email}`}
+            {view === 'set-password' && 'Set a password to log in directly next time'}
           </p>
         </div>
 
@@ -204,17 +268,6 @@ export default function AuthModal({ isOpen, onClose, view, setView }) {
                   />
                 </div>
               </div>
-              <div className="space-y-1">
-                <label className="text-xs font-semibold text-claude-muted dark:text-claude-darkMuted uppercase tracking-wider ml-1">Password</label>
-                <div className="relative">
-                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-claude-muted" />
-                  <input
-                    type="password" required placeholder="••••••••"
-                    className="w-full pl-10 pr-4 py-2.5 bg-claude-bg dark:bg-claude-darkBg border border-claude-border dark:border-claude-darkBorder rounded-xl focus:ring-2 focus:ring-claude-accent/20 focus:border-claude-accent outline-none transition-all dark:text-claude-darkText"
-                    value={password} onChange={(e) => setPassword(e.target.value)}
-                  />
-                </div>
-              </div>
               <button
                 type="submit" disabled={loading || resendTimer > 0}
                 className="w-full py-3 bg-claude-accent text-white font-semibold rounded-xl hover:bg-claude-accent/90 transition-all flex items-center justify-center gap-2 shadow-lg shadow-claude-accent/20 disabled:opacity-70"
@@ -242,13 +295,46 @@ export default function AuthModal({ isOpen, onClose, view, setView }) {
                 type="submit" disabled={loading}
                 className="w-full py-3 bg-claude-accent text-white font-semibold rounded-xl hover:bg-claude-accent/90 transition-all flex items-center justify-center gap-2 shadow-lg shadow-claude-accent/20 disabled:opacity-70"
               >
-                {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : 'Verify & Sign Up'}
+                {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : 'Verify Code'}
               </button>
               <button 
                 type="button" onClick={() => setView('signup')}
                 className="w-full text-xs text-claude-muted hover:text-claude-accent transition-colors"
               >
                 Try a different email
+              </button>
+            </form>
+          )}
+
+          {view === 'set-password' && (
+            <form onSubmit={handleSetPassword} className="space-y-4">
+              <div className="space-y-1">
+                <label className="text-xs font-semibold text-claude-muted dark:text-claude-darkMuted uppercase tracking-wider ml-1">New Password</label>
+                <div className="relative">
+                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-claude-muted" />
+                  <input
+                    type="password" required placeholder="••••••••"
+                    className="w-full pl-10 pr-4 py-2.5 bg-claude-bg dark:bg-claude-darkBg border border-claude-border dark:border-claude-darkBorder rounded-xl focus:ring-2 focus:ring-claude-accent/20 focus:border-claude-accent outline-none transition-all dark:text-claude-darkText"
+                    value={password} onChange={(e) => setPassword(e.target.value)}
+                  />
+                </div>
+              </div>
+              <div className="space-y-1">
+                <label className="text-xs font-semibold text-claude-muted dark:text-claude-darkMuted uppercase tracking-wider ml-1">Confirm Password</label>
+                <div className="relative">
+                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-claude-muted" />
+                  <input
+                    type="password" required placeholder="••••••••"
+                    className="w-full pl-10 pr-4 py-2.5 bg-claude-bg dark:bg-claude-darkBg border border-claude-border dark:border-claude-darkBorder rounded-xl focus:ring-2 focus:ring-claude-accent/20 focus:border-claude-accent outline-none transition-all dark:text-claude-darkText"
+                    value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)}
+                  />
+                </div>
+              </div>
+              <button
+                type="submit" disabled={loading}
+                className="w-full py-3 bg-claude-accent text-white font-semibold rounded-xl hover:bg-claude-accent/90 transition-all flex items-center justify-center gap-2 shadow-lg shadow-claude-accent/20 disabled:opacity-70"
+              >
+                {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : 'Save Password & Log In'}
               </button>
             </form>
           )}
@@ -281,17 +367,19 @@ export default function AuthModal({ isOpen, onClose, view, setView }) {
         </div>
 
         {/* Footer */}
-        <div className="p-6 bg-claude-bg/50 dark:bg-claude-darkBg/50 border-t border-claude-border dark:border-claude-darkBorder text-center">
-          <p className="text-sm text-claude-muted dark:text-claude-darkMuted">
-            {view === 'login' ? "Don't have an account?" : "Already have an account?"}
-            <button
-              onClick={() => setView(view === 'login' ? 'signup' : 'login')}
-              className="ml-1 font-semibold text-claude-accent hover:underline"
-            >
-              {view === 'login' ? 'Sign Up' : 'Log In'}
-            </button>
-          </p>
-        </div>
+        {(view === 'login' || view === 'signup') && (
+          <div className="p-6 bg-claude-bg/50 dark:bg-claude-darkBg/50 border-t border-claude-border dark:border-claude-darkBorder text-center">
+            <p className="text-sm text-claude-muted dark:text-claude-darkMuted">
+              {view === 'login' ? "Don't have an account?" : "Already have an account?"}
+              <button
+                onClick={() => setView(view === 'login' ? 'signup' : 'login')}
+                className="ml-1 font-semibold text-claude-accent hover:underline"
+              >
+                {view === 'login' ? 'Sign Up' : 'Log In'}
+              </button>
+            </p>
+          </div>
+        )}
       </div>
     </div>
   );
