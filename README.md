@@ -113,14 +113,74 @@ To ensure reliable passwordless signups and OTP delivery:
    - **Sender Email:** A verified domain sender email in Resend (e.g., `onboarding@yourdomain.com`).
 4. Ensure the domain chosen matches the sender address perfectly to prevent empty auth errors.
 
-### 5. Running the Application
+### 5. Setup Google & GitHub OAuth in Supabase
+The frontend buttons for Google and GitHub are already configured in [src/components/AuthModal.jsx](file:///C:/Users/Mohamed%20Ismail/Documents/Projects_German/Claude-Token-optimization/src/components/AuthModal.jsx) to trigger authentication client-side. To make them work:
+
+#### Configuring GitHub OAuth:
+1. Go to GitHub -> **Settings** -> **Developer Settings** -> **OAuth Apps** -> **Register a new application**.
+2. Enter a homepage URL (e.g., `http://localhost:5173` for testing).
+3. Set the **Authorization callback URL** using your Supabase project callback link (found in the Supabase Dashboard at **Auth** -> **Providers** -> **GitHub**):
+   `https://<your-supabase-project-ref>.supabase.co/auth/v1/callback`
+4. Register the app, generate a **Client Secret**, and copy both the **Client ID** and **Client Secret**.
+5. Return to the **Supabase Dashboard** -> **Auth** -> **Providers** -> **GitHub**, enable the provider, paste your credentials, and save.
+
+#### Configuring Google OAuth:
+1. Go to the **Google Cloud Console** -> **APIs & Services** -> **Credentials** -> **Create Credentials** -> **OAuth client ID**.
+2. Choose **Web application** as the Application type.
+3. Add the callback URL under **Authorized redirect URIs** (retrieve it from **Auth** -> **Providers** -> **Google** in Supabase):
+   `https://<your-supabase-project-ref>.supabase.co/auth/v1/callback`
+4. Create the client ID, and copy the generated **Client ID** and **Client Secret**.
+5. Return to the **Supabase Dashboard** -> **Auth** -> **Providers** -> **Google**, enable the provider, paste your credentials, and save.
+
+#### Syncing Authenticated Users to Public Tables (Optional)
+By default, Supabase stores authenticated OAuth users inside the system schema table `auth.users`. If you wish to mirror them automatically into a public database table (e.g., a `public.profiles` or `public.users` table for querying or usage records), execute this SQL inside the **Supabase SQL Editor**:
+
+```sql
+-- 1. Create a public profiles table
+create table public.profiles (
+  id uuid references auth.users on delete cascade primary key,
+  email text,
+  avatar_url text,
+  full_name text,
+  created_at timestamp with time zone default timezone('utc'::text, now()) not null
+);
+
+-- 2. Enable Row Level Security (RLS)
+alter table public.profiles enable row level security;
+
+-- 3. Create policies
+create policy "Allow public read access" on public.profiles for select using (true);
+create policy "Allow individual update" on public.profiles for update using (auth.uid() = id);
+
+-- 4. Create trigger function to copy new users automatically
+create or replace function public.handle_new_user()
+returns trigger as $$
+begin
+  insert into public.profiles (id, email, avatar_url, full_name)
+  values (
+    new.id,
+    new.email,
+    new.raw_user_meta_data->>'avatar_url',
+    coalesce(new.raw_user_meta_data->>'full_name', new.raw_user_meta_data->>'name')
+  );
+  return new;
+end;
+$$ language plpgsql security definer;
+
+-- 5. Bind the trigger to auth.users table
+create trigger on_auth_user_created
+  after insert on auth.users
+  for each row execute procedure public.handle_new_user();
+```
+
+### 6. Running the Application
 ```bash
 # Launch the development server
 npm run dev
 ```
 Open [http://localhost:5173](http://localhost:5173) in your browser.
 
-### 6. Building for Production
+### 7. Building for Production
 To bundle the optimized assets:
 ```bash
 npm run build
@@ -129,6 +189,7 @@ Preview the production build locally:
 ```bash
 npm run preview
 ```
+
 
 ---
 
