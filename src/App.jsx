@@ -87,8 +87,8 @@ function App() {
             </div>
 
             <h1 className="text-5xl sm:text-6xl lg:text-7xl font-serif font-medium text-claude-text dark:text-claude-darkText leading-[1.1] mb-8 animate-fade-in [animation-delay:100ms]">
-              Convert files to <br />
-              <span className="text-claude-accent">Markdown</span>
+              Stop Burning Tokens <br />
+              <span className="text-claude-accent">Start saving</span>
             </h1>
 
             <p className="text-xl sm:text-2xl text-claude-muted dark:text-claude-darkMuted max-w-2xl mx-auto text-balance mb-12 animate-fade-in [animation-delay:200ms] font-light">
