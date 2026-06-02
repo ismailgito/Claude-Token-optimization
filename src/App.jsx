@@ -68,7 +68,7 @@ function App() {
         openAuthModal={openAuthModal}
       />
 
-      <main className="px-4 sm:px-6 lg:px-8 pb-20">
+      <main className="px-4 sm:px-6 lg:px-8 pb-16 sm:pb-20">
         {/* Usage banner for guests */}
         {!isSignedIn && !showResults && (
           <div className="max-w-4xl mx-auto mt-4 text-center">
@@ -80,30 +80,30 @@ function App() {
 
         {/* Hero section */}
         {!showResults && (
-          <section className="max-w-4xl mx-auto pt-16 sm:pt-28 pb-12 text-center">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-claude-accent/10 rounded-full border border-claude-accent/20 mb-8 animate-fade-in">
+          <section className="max-w-4xl mx-auto pt-10 sm:pt-16 lg:pt-28 pb-8 sm:pb-12 text-center">
+            <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 bg-claude-accent/10 rounded-full border border-claude-accent/20 mb-6 sm:mb-8 animate-fade-in">
               <Sparkles className="w-4 h-4 text-claude-accent" />
               <span className="text-xs font-semibold text-claude-accent uppercase tracking-wider">Token Optimization</span>
             </div>
 
-            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-serif font-medium text-claude-text dark:text-claude-darkText leading-[1.1] mb-8 animate-fade-in [animation-delay:100ms]">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-serif font-medium text-claude-text dark:text-claude-darkText leading-[1.1] mb-5 sm:mb-8 animate-fade-in [animation-delay:100ms]">
               Stop Burning Tokens <br />
               <span className="text-claude-accent">Start saving</span>
             </h1>
 
-            <p className="text-xl sm:text-2xl text-claude-muted dark:text-claude-darkMuted max-w-2xl mx-auto text-balance mb-12 animate-fade-in [animation-delay:200ms] font-light">
+            <p className="text-lg sm:text-xl md:text-2xl text-claude-muted dark:text-claude-darkMuted max-w-2xl mx-auto text-balance mb-8 sm:mb-12 animate-fade-in [animation-delay:200ms] font-light px-2">
               PDFs, documents, and code — converted into clean, 
               LLM-optimized markdown. Ready for Claude, ChatGPT, and beyond.
             </p>
 
             {/* Feature badges */}
-            <div className="flex flex-wrap justify-center gap-4 mb-16 animate-fade-in [animation-delay:300ms]">
+            <div className="flex flex-wrap justify-center gap-2 sm:gap-4 mb-10 sm:mb-16 animate-fade-in [animation-delay:300ms]">
               {[
                 { icon: Zap, text: 'Token efficient', color: 'text-claude-text dark:text-claude-darkText bg-white dark:bg-claude-darkCard border-claude-border dark:border-claude-darkBorder' },
                 { icon: Shield, text: 'Private & Secure', color: 'text-claude-text dark:text-claude-darkText bg-white dark:bg-claude-darkCard border-claude-border dark:border-claude-darkBorder' },
                 { icon: FileText, text: '10+ Formats', color: 'text-claude-text dark:text-claude-darkText bg-white dark:bg-claude-darkCard border-claude-border dark:border-claude-darkBorder' },
               ].map(({ icon: Icon, text, color }) => (
-                <span key={text} className={`inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium border shadow-sm ${color}`}>
+                <span key={text} className={`inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg sm:rounded-xl text-xs sm:text-sm font-medium border shadow-sm ${color}`}>
                   <Icon className="w-4 h-4 text-claude-accent" />
                   {text}
                 </span>

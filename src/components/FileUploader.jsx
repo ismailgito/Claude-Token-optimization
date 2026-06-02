@@ -103,17 +103,17 @@ export default function FileUploader({ onFileSelect, status, fileName, onReset, 
       >
         {/* Success state */}
         {status === 'done' && (
-          <div className="flex items-center gap-5">
-            <div className="p-3 bg-green-50 dark:bg-green-900/20 rounded-xl">
-              <CheckCircle2 className="w-8 h-8 text-green-600 dark:text-green-500" />
+          <div className="flex items-center gap-3 sm:gap-5">
+            <div className="p-2.5 sm:p-3 bg-green-50 dark:bg-green-900/20 rounded-xl shrink-0">
+              <CheckCircle2 className="w-6 h-6 sm:w-8 sm:h-8 text-green-600 dark:text-green-500" />
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-base font-semibold text-claude-text dark:text-claude-darkText truncate">{fileName}</p>
-              <p className="text-sm text-green-600 dark:text-green-500 mt-0.5">Ready for optimization</p>
+              <p className="text-sm sm:text-base font-semibold text-claude-text dark:text-claude-darkText truncate">{fileName}</p>
+              <p className="text-xs sm:text-sm text-green-600 dark:text-green-500 mt-0.5">Ready for optimization</p>
             </div>
             <button
               onClick={(e) => { e.stopPropagation(); handleReset(); }}
-              className="p-2 hover:bg-claude-bg dark:hover:bg-claude-darkSecondary rounded-full transition-colors"
+              className="p-2 hover:bg-claude-bg dark:hover:bg-claude-darkSecondary rounded-full transition-colors shrink-0"
             >
               <X className="w-5 h-5 text-claude-muted dark:text-claude-darkMuted" />
             </button>
@@ -122,17 +122,17 @@ export default function FileUploader({ onFileSelect, status, fileName, onReset, 
 
         {/* Error state */}
         {status === 'error' && (
-          <div className="flex items-center gap-5">
-            <div className="p-3 bg-red-50 dark:bg-red-900/20 rounded-xl">
-              <AlertCircle className="w-8 h-8 text-red-600 dark:text-red-500" />
+          <div className="flex items-center gap-3 sm:gap-5">
+            <div className="p-2.5 sm:p-3 bg-red-50 dark:bg-red-900/20 rounded-xl shrink-0">
+              <AlertCircle className="w-6 h-6 sm:w-8 sm:h-8 text-red-600 dark:text-red-500" />
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-base font-semibold text-red-600 dark:text-red-400">Failed to process</p>
-              <p className="text-sm text-red-500/80 dark:text-red-400/80 mt-0.5 truncate">{fileName}</p>
+              <p className="text-sm sm:text-base font-semibold text-red-600 dark:text-red-400">Failed to process</p>
+              <p className="text-xs sm:text-sm text-red-500/80 dark:text-red-400/80 mt-0.5 truncate">{fileName}</p>
             </div>
             <button
               onClick={(e) => { e.stopPropagation(); handleReset(); }}
-              className="p-2 hover:bg-claude-bg dark:hover:bg-claude-darkSecondary rounded-full transition-colors"
+              className="p-2 hover:bg-claude-bg dark:hover:bg-claude-darkSecondary rounded-full transition-colors shrink-0"
             >
               <X className="w-5 h-5 text-claude-muted dark:text-claude-darkMuted" />
             </button>
@@ -141,43 +141,43 @@ export default function FileUploader({ onFileSelect, status, fileName, onReset, 
 
         {/* Converting state */}
         {isProcessing && (
-          <div className="flex items-center gap-6 py-4">
-            <div className="relative">
+          <div className="flex items-center gap-4 sm:gap-6 py-3 sm:py-4">
+            <div className="relative shrink-0">
               <div className="absolute inset-0 bg-claude-accent/20 rounded-full blur-md animate-pulse" />
-              <div className="relative p-3 bg-claude-accent/10 rounded-full">
-                <Loader2 className="w-8 h-8 text-claude-accent animate-spin" />
+              <div className="relative p-2.5 sm:p-3 bg-claude-accent/10 rounded-full">
+                <Loader2 className="w-6 h-6 sm:w-8 sm:h-8 text-claude-accent animate-spin" />
               </div>
             </div>
-            <div className="flex-1">
-              <p className="text-lg font-medium text-claude-text dark:text-claude-darkText">Analyzing your file...</p>
-              <p className="text-sm text-claude-muted dark:text-claude-darkMuted mt-1">Extracting content from {fileName}</p>
+            <div className="flex-1 min-w-0">
+              <p className="text-base sm:text-lg font-medium text-claude-text dark:text-claude-darkText">Analyzing your file...</p>
+              <p className="text-xs sm:text-sm text-claude-muted dark:text-claude-darkMuted mt-1 truncate">Extracting content from {fileName}</p>
             </div>
           </div>
         )}
 
         {/* Idle state */}
         {status === 'idle' && (
-          <div className="flex flex-col items-center gap-6 py-4">
-            <div className="p-4 bg-claude-bg dark:bg-claude-darkSecondary rounded-2xl shadow-inner group-hover:bg-white dark:group-hover:bg-claude-darkCard transition-colors">
-              <Paperclip className="w-10 h-10 text-claude-accent" />
+          <div className="flex flex-col items-center gap-4 sm:gap-6 py-3 sm:py-4">
+            <div className="p-3 sm:p-4 bg-claude-bg dark:bg-claude-darkSecondary rounded-2xl shadow-inner transition-colors">
+              <Paperclip className="w-8 h-8 sm:w-10 sm:h-10 text-claude-accent" />
             </div>
-            <div className="text-center">
-              <p className="text-xl font-medium text-claude-text dark:text-claude-darkText">
+            <div className="text-center px-2">
+              <p className="text-lg sm:text-xl font-medium text-claude-text dark:text-claude-darkText">
                 {isDragActive ? 'Release to upload' : 'Click or drag file here'}
               </p>
-              <p className="text-sm text-claude-muted dark:text-claude-darkMuted mt-2 max-w-sm mx-auto">
+              <p className="text-xs sm:text-sm text-claude-muted dark:text-claude-darkMuted mt-2 max-w-sm mx-auto">
                 Upload PDFs, Word docs, spreadsheets, or code. 
                 Everything is processed locally in your browser.
               </p>
             </div>
 
-            <div className="flex flex-wrap justify-center gap-3 mt-4">
+            <div className="flex flex-wrap justify-center gap-2 sm:gap-3 mt-2 sm:mt-4">
               {SUPPORTED_TYPES.map(({ ext, icon: Icon, color }) => (
                 <span
                   key={ext}
-                  className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold border border-claude-border dark:border-claude-darkBorder shadow-sm ${color}`}
+                  className={`inline-flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg text-[10px] sm:text-xs font-semibold border border-claude-border dark:border-claude-darkBorder shadow-sm ${color}`}
                 >
-                  <Icon className="w-3.5 h-3.5" />
+                  <Icon className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
                   {ext}
                 </span>
               ))}

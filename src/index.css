@@ -66,7 +66,7 @@
   }
 
   .file-drop-zone-claude {
-    @apply border-2 border-dashed border-claude-border rounded-2xl p-12 text-center 
+    @apply border-2 border-dashed border-claude-border rounded-2xl p-6 sm:p-10 md:p-12 text-center 
            transition-all duration-300 cursor-pointer bg-white/50
            hover:border-claude-accent/50 hover:bg-white;
   }
@@ -135,8 +135,26 @@
   }
 }
 
+@layer base {
+  /* Mobile safe-area support for notched devices */
+  .safe-area-top {
+    padding-top: env(safe-area-inset-top);
+  }
+  .safe-area-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+}
+
+/* Mobile: improve touch targets */
+@media (pointer: coarse) {
+  button, a, [role="button"] {
+    min-height: 44px;
+    min-width: 44px;
   }
 }

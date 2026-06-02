@@ -48,25 +48,25 @@ export default function MarkdownPreview({ markdown, fileName }) {
     <div className={`w-full transition-all duration-300 ${isFullscreen ? 'fixed inset-4 z-50' : 'animate-fade-in'}`}>
       <div className={`claude-card overflow-hidden bg-white dark:bg-claude-darkCard ${isFullscreen ? 'h-[calc(100vh-2rem)] flex flex-col' : 'shadow-lg border-claude-border dark:border-claude-darkBorder'}`}>
         {/* Toolbar */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-claude-border dark:border-claude-darkBorder bg-claude-bg/30 dark:bg-claude-darkSecondary/30">
-          <div className="flex items-center gap-3">
-            <div className="p-2 bg-claude-accent/10 rounded-lg">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between px-4 sm:px-6 py-3 sm:py-4 border-b border-claude-border dark:border-claude-darkBorder bg-claude-bg/30 dark:bg-claude-darkSecondary/30 gap-3 sm:gap-0">
+          <div className="flex items-center gap-3 min-w-0">
+            <div className="p-2 bg-claude-accent/10 rounded-lg shrink-0">
               <FileText className="w-4 h-4 text-claude-accent" />
             </div>
-            <div>
-              <span className="text-sm font-semibold text-claude-text dark:text-claude-darkText block leading-none">{fileName || 'optimized_content.md'}</span>
+            <div className="min-w-0">
+              <span className="text-xs sm:text-sm font-semibold text-claude-text dark:text-claude-darkText block leading-none truncate">{fileName || 'optimized_content.md'}</span>
               <span className="text-[10px] text-claude-muted dark:text-claude-darkMuted font-bold uppercase tracking-widest mt-1 block">
                 {lines} lines • Markdown
               </span>
             </div>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center justify-between sm:justify-end gap-2">
             {/* View toggle */}
-            <div className="flex bg-claude-secondary dark:bg-claude-darkSecondary rounded-full p-1 mr-4 border border-claude-border dark:border-claude-darkBorder">
+            <div className="flex bg-claude-secondary dark:bg-claude-darkSecondary rounded-full p-1 border border-claude-border dark:border-claude-darkBorder">
               <button
                 onClick={() => setViewMode('preview')}
-                className={`flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold transition-all ${
+                className={`flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-1.5 rounded-full text-xs font-semibold transition-all ${
                   viewMode === 'preview'
                     ? 'bg-white dark:bg-claude-darkCard text-claude-accent shadow-sm'
                     : 'text-claude-muted dark:text-claude-darkMuted hover:text-claude-text dark:hover:text-claude-darkText'
@@ -77,7 +77,7 @@ export default function MarkdownPreview({ markdown, fileName }) {
               </button>
               <button
                 onClick={() => setViewMode('source')}
-                className={`flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold transition-all ${
+                className={`flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-1.5 rounded-full text-xs font-semibold transition-all ${
                   viewMode === 'source'
                     ? 'bg-white dark:bg-claude-darkCard text-claude-accent shadow-sm'
                     : 'text-claude-muted dark:text-claude-darkMuted hover:text-claude-text dark:hover:text-claude-darkText'
@@ -88,36 +88,36 @@ export default function MarkdownPreview({ markdown, fileName }) {
               </button>
             </div>
 
-            <div className="flex items-center gap-1 border-l border-claude-border dark:border-claude-darkBorder pl-4 ml-2">
+            <div className="flex items-center gap-0.5 sm:gap-1 border-l border-claude-border dark:border-claude-darkBorder pl-2 sm:pl-4 sm:ml-2">
               <button
                 onClick={handleCopy}
-                className="p-2.5 hover:bg-claude-bg dark:hover:bg-claude-darkSecondary rounded-full transition-colors text-claude-muted dark:text-claude-darkMuted hover:text-claude-accent"
+                className="p-2 sm:p-2.5 hover:bg-claude-bg dark:hover:bg-claude-darkSecondary rounded-full transition-colors text-claude-muted dark:text-claude-darkMuted hover:text-claude-accent"
                 title="Copy to clipboard"
               >
                 {copied ? (
-                  <Check className="w-4.5 h-4.5 text-green-600 dark:text-green-500" />
+                  <Check className="w-4 h-4 sm:w-[18px] sm:h-[18px] text-green-600 dark:text-green-500" />
                 ) : (
-                  <Copy className="w-4.5 h-4.5" />
+                  <Copy className="w-4 h-4 sm:w-[18px] sm:h-[18px]" />
                 )}
               </button>
 
               <button
                 onClick={handleDownload}
-                className="p-2.5 hover:bg-claude-bg dark:hover:bg-claude-darkSecondary rounded-full transition-colors text-claude-muted dark:text-claude-darkMuted hover:text-claude-accent"
+                className="p-2 sm:p-2.5 hover:bg-claude-bg dark:hover:bg-claude-darkSecondary rounded-full transition-colors text-claude-muted dark:text-claude-darkMuted hover:text-claude-accent"
                 title="Download .md file"
               >
-                <Download className="w-4.5 h-4.5" />
+                <Download className="w-4 h-4 sm:w-[18px] sm:h-[18px]" />
               </button>
 
               <button
                 onClick={() => setIsFullscreen(v => !v)}
-                className="p-2.5 hover:bg-claude-bg dark:hover:bg-claude-darkSecondary rounded-full transition-colors text-claude-muted dark:text-claude-darkMuted hover:text-claude-accent"
+                className="hidden sm:block p-2.5 hover:bg-claude-bg dark:hover:bg-claude-darkSecondary rounded-full transition-colors text-claude-muted dark:text-claude-darkMuted hover:text-claude-accent"
                 title={isFullscreen ? 'Exit fullscreen' : 'Fullscreen'}
               >
                 {isFullscreen ? (
-                  <Minimize2 className="w-4.5 h-4.5" />
+                  <Minimize2 className="w-[18px] h-[18px]" />
                 ) : (
-                  <Maximize2 className="w-4.5 h-4.5" />
+                  <Maximize2 className="w-[18px] h-[18px]" />
                 )}
               </button>
             </div>
@@ -127,7 +127,7 @@ export default function MarkdownPreview({ markdown, fileName }) {
         {/* Content */}
         <div className={`${isFullscreen ? 'flex-1 overflow-auto' : 'max-h-[700px] overflow-auto'} bg-white dark:bg-claude-darkCard transition-colors duration-300`}>
           {viewMode === 'preview' ? (
-            <div className="p-8 md:p-12 markdown-body-claude max-w-4xl mx-auto selection:bg-claude-accent/10">
+            <div className="p-4 sm:p-8 md:p-12 markdown-body-claude max-w-4xl mx-auto selection:bg-claude-accent/10">
               <ReactMarkdown
                 remarkPlugins={[remarkGfm]}
                 rehypePlugins={[rehypeRaw]}
@@ -179,7 +179,7 @@ export default function MarkdownPreview({ markdown, fileName }) {
               </ReactMarkdown>
             </div>
           ) : (
-            <div className="p-8 bg-claude-secondary/30 dark:bg-claude-darkSecondary/30 min-h-full" ref={preRef}>
+            <div className="p-4 sm:p-8 bg-claude-secondary/30 dark:bg-claude-darkSecondary/30 min-h-full" ref={preRef}>
               <pre className="text-sm text-claude-text dark:text-claude-darkText font-mono whitespace-pre-wrap break-all leading-relaxed max-w-4xl mx-auto">
                 {markdown}
               </pre>
