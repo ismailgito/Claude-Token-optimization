@@ -1,0 +1,121 @@
+<svg width="900" height="280" viewBox="0 0 900 280" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="evBg" x1="0" y1="0" x2="900" y2="280" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#0e0e10"/>
+      <stop offset="100%" stop-color="#1a1a2e"/>
+    </linearGradient>
+    <linearGradient id="evAccent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#d97757"/>
+      <stop offset="100%" stop-color="#f59e0b"/>
+    </linearGradient>
+    <filter id="evGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="2"/>
+      <feMerge>
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <rect width="900" height="280" rx="12" fill="url(#evBg)"/>
+
+  <text x="450" y="28" text-anchor="middle" font-family="monospace" font-size="11" fill="#d97757" letter-spacing="3" opacity="0.6">ANIMATION EVENT FLOW</text>
+
+  <!-- Event timeline -->
+  <g transform="translate(40, 55)">
+    <!-- Timeline bar -->
+    <rect width="820" height="4" rx="2" fill="#d97757" opacity="0.1"/>
+
+    <!-- Event nodes -->
+    <!-- 1. animationstart -->
+    <g>
+      <circle cx="80" cy="2" r="8" fill="#d97757" opacity="0.2" stroke="#d97757" stroke-width="1.5">
+        <animate attributeName="r" values="8;10;8" dur="1.5s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="80" cy="2" r="3" fill="#d97757">
+        <animate attributeName="opacity" values="0.6;1;0.6" dur="1.5s" repeatCount="indefinite"/>
+      </circle>
+      <text x="80" y="30" text-anchor="middle" font-family="monospace" font-size="9" font-weight="bold" fill="#d97757">animationstart</text>
+      <text x="80" y="44" text-anchor="middle" font-family="monospace" font-size="7" fill="#888">after delay</text>
+      <text x="80" y="56" text-anchor="middle" font-family="monospace" font-size="7" fill="#888">before update</text>
+    </g>
+
+    <!-- 2. animationupdate (repeating) -->
+    <g>
+      <circle cx="230" cy="2" r="6" fill="#f59e0b" opacity="0.3" stroke="#f59e0b" stroke-width="1">
+        <animate attributeName="opacity" values="0.3;0.8;0.3" dur="0.8s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="230" cy="2" r="2.5" fill="#f59e0b"/>
+      <text x="230" y="30" text-anchor="middle" font-family="monospace" font-size="9" font-weight="bold" fill="#f59e0b">animationupdate</text>
+      <text x="230" y="44" text-anchor="middle" font-family="monospace" font-size="7" fill="#888">each frame</text>
+      <text x="230" y="56" text-anchor="middle" font-family="monospace" font-size="7" fill="#888">frame callback</text>
+      <!-- Multiple dots to show frequency -->
+      <circle cx="195" cy="2" r="1.5" fill="#f59e0b" opacity="0.3"/>
+      <circle cx="210" cy="2" r="1.5" fill="#f59e0b" opacity="0.4"/>
+      <circle cx="250" cy="2" r="1.5" fill="#f59e0b" opacity="0.4"/>
+      <circle cx="265" cy="2" r="1.5" fill="#f59e0b" opacity="0.3"/>
+    </g>
+
+    <!-- 3. animationrepeat -->
+    <g>
+      <circle cx="390" cy="2" r="7" fill="#a3e635" opacity="0.3" stroke="#a3e635" stroke-width="1">
+        <animate attributeName="opacity" values="0.3;0.7;0.3" dur="2s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="390" cy="2" r="2.5" fill="#a3e635"/>
+      <text x="390" y="30" text-anchor="middle" font-family="monospace" font-size="9" font-weight="bold" fill="#a3e635">animationrepeat</text>
+      <text x="390" y="44" text-anchor="middle" font-family="monospace" font-size="7" fill="#888">each cycle</text>
+      <text x="390" y="56" text-anchor="middle" font-family="monospace" font-size="7" fill="#888">repeat count++</text>
+    </g>
+
+    <!-- 4. animationcomplete -->
+    <g>
+      <circle cx="560" cy="2" r="9" fill="#06b6d4" opacity="0.3" stroke="#06b6d4" stroke-width="1.5">
+        <animate attributeName="r" values="9;11;9" dur="2s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="560" cy="2" r="3.5" fill="#06b6d4"/>
+      <text x="560" y="30" text-anchor="middle" font-family="monospace" font-size="9" font-weight="bold" fill="#06b6d4">animationcomplete</text>
+      <text x="560" y="44" text-anchor="middle" font-family="monospace" font-size="7" fill="#888">natural end</text>
+      <text x="560" y="56" text-anchor="middle" font-family="monospace" font-size="7" fill="#888">finite repeat</text>
+    </g>
+
+    <!-- 5. animationstop (alternative path) -->
+    <g transform="translate(0, 80)">
+      <rect x="100" y="0" width="2" height="20" fill="#ef4444" opacity="0.3" stroke-dasharray="2 2"/>
+      <circle cx="100" cy="22" r="7" fill="#ef4444" opacity="0.3" stroke="#ef4444" stroke-width="1"/>
+      <circle cx="100" cy="22" r="2.5" fill="#ef4444"/>
+      <text x="100" y="42" text-anchor="middle" font-family="monospace" font-size="9" font-weight="bold" fill="#ef4444">animationstop</text>
+      <text x="100" y="56" text-anchor="middle" font-family="monospace" font-size="7" fill="#888">manual stop()</text>
+      <text x="100" y="68" text-anchor="middle" font-family="monospace" font-size="7" fill="#888">not complete!</text>
+
+      <!-- Arrow from stop to chain trigger -->
+      <line x1="170" y1="42" x2="250" y2="42" stroke="#ef4444" stroke-width="1" stroke-dasharray="3 2" opacity="0.4">
+        <animate attributeName="stroke-dashoffset" values="0;-10" dur="1s" repeatCount="indefinite"/>
+      </line>
+      <text x="210" y="38" text-anchor="middle" font-family="monospace" font-size="7" fill="#ef4444" opacity="0.6">triggers chain</text>
+    </g>
+
+    <!-- 6. animationrestart -->
+    <g transform="translate(0, 80)">
+      <circle cx="560" cy="22" r="6" fill="#8b5cf6" opacity="0.3" stroke="#8b5cf6" stroke-width="1"/>
+      <circle cx="560" cy="22" r="2" fill="#8b5cf6"/>
+      <text x="560" y="42" text-anchor="middle" font-family="monospace" font-size="9" font-weight="bold" fill="#8b5cf6">animationrestart</text>
+      <text x="560" y="56" text-anchor="middle" font-family="monospace" font-size="7" fill="#888">mid-play restart</text>
+      <text x="560" y="68" text-anchor="middle" font-family="monospace" font-size="7" fill="#888">play() during play()</text>
+    </g>
+  </g>
+
+  <!-- Callback signature -->
+  <g transform="translate(40, 200)">
+    <rect width="820" height="30" rx="6" fill="#ffffff" opacity="0.03" stroke="#ffffff" stroke-width="0.5" stroke-dasharray="4 4"/>
+    <text x="20" y="19" font-family="monospace" font-size="9" fill="#d97757">Callback signature: </text>
+    <text x="200" y="19" font-family="monospace" font-size="9" fill="#f59e0b">(animation, frame, gameObject, frameKey)</text>
+  </g>
+
+  <!-- Key-specific event example -->
+  <g transform="translate(40, 240)">
+    <rect width="820" height="30" rx="6" fill="#d97757" opacity="0.05" stroke="#d97757" stroke-width="1" stroke-dasharray="4 4"/>
+    <text x="20" y="19" font-family="monospace" font-size="9" fill="#d97757">Key-specific: </text>
+    <text x="145" y="19" font-family="monospace" font-size="9" fill="#f59e0b">sprite.on('animationcomplete-explode', ...)</text>
+    <text x="530" y="19" font-family="monospace" font-size="9" fill="#888">  // only fires for 'explode' anim</text>
+  </g>
+</svg>

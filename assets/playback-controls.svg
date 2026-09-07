@@ -1,0 +1,129 @@
+<svg width="900" height="220" viewBox="0 0 900 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="pcBg" x1="0" y1="0" x2="900" y2="220" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#0e0e10"/>
+      <stop offset="100%" stop-color="#1a1a2e"/>
+    </linearGradient>
+    <linearGradient id="pcGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#d97757"/>
+      <stop offset="100%" stop-color="#f59e0b"/>
+    </linearGradient>
+    <filter id="pcGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="2"/>
+      <feMerge>
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <rect width="900" height="220" rx="12" fill="url(#pcBg)"/>
+
+  <text x="450" y="28" text-anchor="middle" font-family="monospace" font-size="11" fill="#d97757" letter-spacing="3" opacity="0.6">PLAYBACK CONTROL PATTERNS</text>
+
+  <!-- Pattern 1: Yoyo -->
+  <g transform="translate(30, 50)">
+    <rect width="160" height="100" rx="8" fill="#1a1a2e" stroke="#d97757" stroke-width="1" opacity="0.6"/>
+    <text x="80" y="18" text-anchor="middle" font-family="monospace" font-size="9" font-weight="bold" fill="#d97757">YOYO</text>
+    <text x="80" y="32" text-anchor="middle" font-family="monospace" font-size="7" fill="#888">forward → backward</text>
+
+    <!-- Yoyo animation visualization -->
+    <g transform="translate(15, 42)">
+      <rect width="130" height="8" rx="4" fill="#d97757" opacity="0.1"/>
+      <rect width="0" height="8" rx="4" fill="url(#pcGrad)">
+        <animate attributeName="width" values="0;130;0" dur="3s" repeatCount="indefinite"/>
+      </rect>
+      <!-- Direction indicator -->
+      <text x="0" y="22" font-family="monospace" font-size="7" fill="#d97757" opacity="0.5">→ → → ← ← ←</text>
+    </g>
+    <text x="80" y="90" text-anchor="middle" font-family="monospace" font-size="7" fill="#666">yoyo: true, repeat: -1</text>
+  </g>
+
+  <!-- Pattern 2: Pause/Resume -->
+  <g transform="translate(210, 50)">
+    <rect width="160" height="100" rx="8" fill="#1a1a2e" stroke="#f59e0b" stroke-width="1" opacity="0.6"/>
+    <text x="80" y="18" text-anchor="middle" font-family="monospace" font-size="9" font-weight="bold" fill="#f59e0b">PAUSE / RESUME</text>
+    <text x="80" y="32" text-anchor="middle" font-family="monospace" font-size="7" fill="#888">per-sprite control</text>
+
+    <g transform="translate(15, 42)">
+      <rect width="130" height="8" rx="4" fill="#f59e0b" opacity="0.1"/>
+      <rect width="0" height="8" rx="4" fill="#f59e0b" opacity="0.6">
+        <animate attributeName="width" values="0;60;60;130;130;0" dur="4s" repeatCount="indefinite"/>
+      </rect>
+      <text x="0" y="22" font-family="monospace" font-size="7" fill="#f59e0b" opacity="0.5">▶ ▶ ▶ ⏸ ⏸ ▶ ▶ ▶</text>
+    </g>
+    <text x="80" y="90" text-anchor="middle" font-family="monospace" font-size="7" fill="#666">sprite.anims.pause()</text>
+  </g>
+
+  <!-- Pattern 3: TimeScale -->
+  <g transform="translate(390, 50)">
+    <rect width="160" height="100" rx="8" fill="#1a1a2e" stroke="#a3e635" stroke-width="1" opacity="0.6"/>
+    <text x="80" y="18" text-anchor="middle" font-family="monospace" font-size="9" font-weight="bold" fill="#a3e635">TIMESCALE</text>
+    <text x="80" y="32" text-anchor="middle" font-family="monospace" font-size="7" fill="#888">speed control</text>
+
+    <g transform="translate(15, 42)">
+      <!-- Fast track -->
+      <rect width="130" height="4" rx="2" fill="#a3e635" opacity="0.15"/>
+      <rect width="0" height="4" rx="2" fill="#a3e635" opacity="0.5">
+        <animate attributeName="width" values="0;130;0" dur="1.5s" repeatCount="indefinite"/>
+      </rect>
+      <!-- Slow track -->
+      <rect y="8" width="130" height="4" rx="2" fill="#a3e635" opacity="0.08"/>
+      <rect y="8" width="0" height="4" rx="2" fill="#a3e635" opacity="0.25">
+        <animate attributeName="width" values="0;130;0" dur="3s" repeatCount="indefinite"/>
+      </rect>
+      <text x="0" y="24" font-family="monospace" font-size="7" fill="#a3e635" opacity="0.5">2x ▶▶  |  0.5x ▷</text>
+    </g>
+    <text x="80" y="90" text-anchor="middle" font-family="monospace" font-size="7" fill="#666">sprite.anims.timeScale</text>
+  </g>
+
+  <!-- Pattern 4: Stagger -->
+  <g transform="translate(570, 50)">
+    <rect width="160" height="100" rx="8" fill="#1a1a2e" stroke="#06b6d4" stroke-width="1" opacity="0.6"/>
+    <text x="80" y="18" text-anchor="middle" font-family="monospace" font-size="9" font-weight="bold" fill="#06b6d4">STAGGER</text>
+    <text x="80" y="32" text-anchor="middle" font-family="monospace" font-size="7" fill="#888">cascading playback</text>
+
+    <g transform="translate(15, 42)">
+      <!-- Staggered bars -->
+      <rect width="30" height="6" rx="2" fill="#06b6d4" opacity="0.4">
+        <animate attributeName="opacity" values="0.1;0.5;0.1" dur="2s" repeatCount="indefinite"/>
+      </rect>
+      <rect x="35" y="0" width="30" height="6" rx="2" fill="#06b6d4" opacity="0.3">
+        <animate attributeName="opacity" values="0.1;0.5;0.1" dur="2s" repeatCount="indefinite" begin="0.2s"/>
+      </rect>
+      <rect x="70" y="0" width="30" height="6" rx="2" fill="#06b6d4" opacity="0.25">
+        <animate attributeName="opacity" values="0.1;0.5;0.1" dur="2s" repeatCount="indefinite" begin="0.4s"/>
+      </rect>
+      <rect x="105" y="0" width="20" height="6" rx="2" fill="#06b6d4" opacity="0.2">
+        <animate attributeName="opacity" values="0.1;0.5;0.1" dur="2s" repeatCount="indefinite" begin="0.6s"/>
+      </rect>
+      <text x="0" y="24" font-family="monospace" font-size="7" fill="#06b6d4" opacity="0.5">1 2 3 4 (100ms gap)</text>
+    </g>
+    <text x="80" y="90" text-anchor="middle" font-family="monospace" font-size="7" fill="#666">staggerPlay('walk', ...)</text>
+  </g>
+
+  <!-- Pattern 5: Reverse -->
+  <g transform="translate(750, 50)">
+    <rect width="120" height="100" rx="8" fill="#1a1a2e" stroke="#8b5cf6" stroke-width="1" opacity="0.6"/>
+    <text x="60" y="18" text-anchor="middle" font-family="monospace" font-size="9" font-weight="bold" fill="#8b5cf6">REVERSE</text>
+    <text x="60" y="32" text-anchor="middle" font-family="monospace" font-size="7" fill="#888">mid-playback</text>
+
+    <g transform="translate(15, 42)">
+      <rect width="90" height="6" rx="2" fill="#8b5cf6" opacity="0.15"/>
+      <rect width="0" height="6" rx="2" fill="#8b5cf6" opacity="0.4">
+        <animate attributeName="width" values="0;90;0;90;0" dur="4s" repeatCount="indefinite"/>
+      </rect>
+      <text x="0" y="24" font-family="monospace" font-size="7" fill="#8b5cf6" opacity="0.5">← reverse()</text>
+    </g>
+    <text x="60" y="90" text-anchor="middle" font-family="monospace" font-size="7" fill="#666">sprite.anims.reverse()</text>
+  </g>
+
+  <!-- Bottom code examples -->
+  <g transform="translate(30, 170)">
+    <rect width="840" height="40" rx="6" fill="#ffffff" opacity="0.03" stroke="#ffffff" stroke-width="0.5" stroke-dasharray="4 4"/>
+    <text x="15" y="16" font-family="monospace" font-size="8" fill="#d97757">sprite.play({ key: 'walk', timeScale: 0.5 });</text>
+    <text x="320" y="16" font-family="monospace" font-size="8" fill="#f59e0b">sprite.play('walk', true); // ignoreIfPlaying</text>
+    <text x="630" y="16" font-family="monospace" font-size="8" fill="#a3e635">sprite.anims.stopOnFrame(frame);</text>
+    <text x="15" y="32" font-family="monospace" font-size="8" fill="#666">sprite.chain(['fall', 'land', 'idle']);  //  sprite.anims.playAfterDelay('walk', 1000);  //  sprite.anims.playAfterRepeat('idle', 2);</text>
+  </g>
+</svg>

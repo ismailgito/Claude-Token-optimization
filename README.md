@@ -1,82 +1,9 @@
 <p align="center">
-  <!-- Animated Hero SVG -->
-  <svg width="640" height="260" viewBox="0 0 640 260" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <defs>
-      <linearGradient id="bg" x1="0" y1="0" x2="640" y2="260" gradientUnits="userSpaceOnUse">
-        <stop offset="0%" stop-color="#f5f2ed"/>
-        <stop offset="100%" stop-color="#f0ede8"/>
-      </linearGradient>
-      <linearGradient id="accent" x1="0" y1="0" x2="640" y2="0" gradientUnits="userSpaceOnUse">
-        <stop offset="0%" stop-color="#d97757"/>
-        <stop offset="50%" stop-color="#c05a3a"/>
-        <stop offset="100%" stop-color="#d97757"/>
-      </linearGradient>
-      <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
-        <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#d97757" flood-opacity="0.18"/>
-      </filter>
-    </defs>
-    <rect width="640" height="260" rx="24" fill="url(#bg)"/>
-    <!-- Floating document shapes -->
-    <g filter="url(#shadow)">
-      <rect x="60" y="50" width="120" height="160" rx="12" fill="#fff" stroke="#e5e5e5" stroke-width="1.5">
-        <animate attributeName="y" values="50;44;50" dur="4s" repeatCount="indefinite"/>
-      </rect>
-      <rect x="72" y="72" width="80" height="6" rx="3" fill="#d97757" opacity="0.5">
-        <animate attributeName="opacity" values="0.5;1;0.5" dur="2s" repeatCount="indefinite"/>
-      </rect>
-      <rect x="72" y="90" width="90" height="4" rx="2" fill="#d97757" opacity="0.25"/>
-      <rect x="72" y="104" width="75" height="4" rx="2" fill="#d97757" opacity="0.25"/>
-      <rect x="72" y="118" width="85" height="4" rx="2" fill="#d97757" opacity="0.25"/>
-      <rect x="72" y="132" width="50" height="4" rx="2" fill="#d97757" opacity="0.25"/>
-    </g>
-    <!-- Sparkle stars -->
-    <circle cx="220" cy="40" r="3" fill="#d97757" opacity="0.6">
-      <animate attributeName="opacity" values="0.6;1;0.6" dur="1.5s" repeatCount="indefinite"/>
-    </circle>
-    <circle cx="460" cy="70" r="2" fill="#d97757" opacity="0.4">
-      <animate attributeName="opacity" values="0.4;1;0.4" dur="2.3s" repeatCount="indefinite"/>
-    </circle>
-    <circle cx="520" cy="190" r="2.5" fill="#d97757" opacity="0.5">
-      <animate attributeName="opacity" values="0.5;1;0.5" dur="1.8s" repeatCount="indefinite"/>
-    </circle>
-    <!-- Arrow transformation -->
-    <g filter="url(#shadow)">
-      <rect x="230" y="100" width="180" height="60" rx="16" fill="#fff" stroke="#e5e5e5" stroke-width="1.5"/>
-      <text x="320" y="120" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#666">Messy Source</text>
-      <rect x="248" y="134" width="30" height="5" rx="2.5" fill="#fca5a5"/>
-      <rect x="248" y="144" width="50" height="5" rx="2.5" fill="#fecaca"/>
-      <rect x="248" y="154" width="40" height="5" rx="2.5" fill="#fca5a5"/>
-      <!-- Arrow -->
-      <path d="M305 130 L315 130 L315 115 L335 130 L315 145 L315 130 L305 130Z" fill="#d97757">
-        <animate attributeName="opacity" values="0.7;1;0.7" dur="1.2s" repeatCount="indefinite"/>
-      </path>
-    </g>
-    <!-- Output document -->
-    <g filter="url(#shadow)">
-      <rect x="410" y="50" width="120" height="160" rx="12" fill="#fff" stroke="#d97757" stroke-width="2" stroke-dasharray="6 3">
-        <animate attributeName="stroke-dashoffset" values="0;-18" dur="1.5s" repeatCount="indefinite"/>
-      </rect>
-      <text x="470" y="72" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#d97757" font-weight="bold">Clean MD</text>
-      <rect x="428" y="90" width="84" height="5" rx="2.5" fill="#a3e635" opacity="0.6"/>
-      <rect x="428" y="102" width="65" height="5" rx="2.5" fill="#a3e635" opacity="0.4"/>
-      <rect x="428" y="114" width="78" height="5" rx="2.5" fill="#a3e635" opacity="0.5"/>
-    </g>
-    <!-- % badge -->
-    <g filter="url(#shadow)">
-      <circle cx="320" cy="210" r="36" fill="#fff"/>
-      <text x="320" y="208" text-anchor="middle" font-family="Georgia,serif" font-size="22" font-weight="bold" fill="#d97757">−72%</text>
-      <text x="320" y="226" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="7" fill="#999" letter-spacing="1">TOKEN SAVE</text>
-    </g>
-    <!-- Animated accent line at bottom -->
-    <rect x="80" y="244" width="480" height="3" rx="1.5" fill="url(#accent)">
-      <animate attributeName="width" values="480;520;480" dur="3s" repeatCount="indefinite"/>
-      <animate attributeName="x" values="80;60;80" dur="3s" repeatCount="indefinite"/>
-    </rect>
-  </svg>
+  <img src="assets/hero-banner.svg" width="960" alt="TokenOptimizer — Frame-by-frame token reduction for LLMs">
 </p>
 
 <p align="center">
-  <a href="https://github.com">
+  <a href="https://react.dev">
     <img src="https://img.shields.io/badge/React-18.3-61DAFB?style=for-the-badge&logo=react" alt="React">
   </a>
   <a href="https://vitejs.dev">
@@ -86,21 +13,143 @@
     <img src="https://img.shields.io/badge/Tailwind-3.4-06B6D4?style=for-the-badge&logo=tailwindcss" alt="Tailwind">
   </a>
   <a href="https://supabase.com">
-    <img src="https://img.shields.io/badge/Supabase-Auth-3ECF8E?style=for-the-badge&logo=supabase" alt="Supabase">
+    <img src="https://img.shields.io/badge/Supabase-2.106-3ECF8E?style=for-the-badge&logo=supabase" alt="Supabase">
+  </a>
+  <a href="https://mozilla.github.io/pdf.js/">
+    <img src="https://img.shields.io/badge/PDF.js-4.0-FF0000?style=for-the-badge" alt="PDF.js">
   </a>
 </p>
+
+<p align="center"><b>Turn any document into lean, LLM-ready markdown — frame by frame.</b></p>
 
 ---
 
 ## ✨ What is TokenOptimizer?
 
-**Turn any document into lean, LLM-ready markdown.** PDFs, Word files, Excel sheets, code — converted client-side into clean, token-efficient markdown optimized for Claude, ChatGPT, and every major model.
+An **AnimationManager** for your text. Where Phaser advances sprites through hand-crafted frame sequences, TokenOptimizer advances your documents through a client-side optimization pipeline that strips redundant frames (padding, fluff, hidden tables) and keeps only the frames the model actually needs.
 
-> 🔒 **100% private** — all processing happens in your browser. Nothing uploads to a server.
+**PDFs, Word files, Excel sheets, code** — converted fully in-browser into clean, token-efficient markdown that Claude, ChatGPT, and every major model can consume at a fraction of the cost.
+
+> 🔒 **100% private** — every frame is processed in your browser. Nothing ever uploads to a server.
+
+<div align="center">
+
+### The Optimization Pipeline
+
+| Frame | Playback State | What Happens |
+|:---:|:---:|:---|
+| 01 | `animationstart` | **Upload & Parse** — drag & drop any supported file |
+| 02 | `animationupdate` | **Smart Optimize** — strip redundancy, compress tables, preserve structure |
+| 03 | `animationcomplete` | **Clean Markdown** — semantic output with minimal token footprint |
+
+</div>
 
 ---
 
-## 🚀 Quick Start
+## ⚙️ Core Concepts
+
+Just like Phaser's animation system, TokenOptimizer is built on a **manager/state** separation:
+
+<p align="center">
+  <img src="assets/animation-manager.svg" width="800" alt="AnimationManager vs AnimationState architecture">
+</p>
+
+| Aspect | AnimationManager | TokenOptimizer |
+|---|---|---|
+| Scope | Global — shared across all scenes | Singleton processing core |
+| Access | `this.anims` | `useOptimizer()` hook |
+| Purpose | Create/store animation definitions | Create/store parse pipelines |
+| Lifecycle | Lives for the whole game | Lives for the whole session |
+
+No duplicate definitions, no re-renders, no wasted tokens.
+
+---
+
+## 🎯 Features
+
+<table>
+  <tr>
+    <td align="center" width="33%">
+      <img src="assets/spritesheet-flow.svg" width="300" alt="Format pipeline like a spritesheet">
+      <br><b>📄 10+ Formats</b><br>
+      <sub>PDF, DOCX, XLSX, TXT, CSV, MD, source code</sub>
+    </td>
+    <td align="center" width="33%">
+      <img src="assets/token-comparison.svg" width="300" alt="Before vs after token comparison">
+      <br><b>⚡ Token Efficient</b><br>
+      <sub>Average <b>72% size reduction</b> vs raw input</sub>
+    </td>
+    <td align="center" width="33%">
+      <img src="assets/chaining-flow.svg" width="300" alt="Chain parse stages like animations">
+      <br><b>🔐 Private & Secure</b><br>
+      <sub>Zero server-side processing — everything stays local</sub>
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <b>🌙 Dark Mode</b><br>
+      <sub>Automatic + manual toggle with smooth transitions</sub>
+    </td>
+    <td align="center">
+      <b>📊 Context Tracker</b><br>
+      <sub>Simulate conversation turns against a 200k window</sub>
+    </td>
+    <td align="center">
+      <b>🧠 Smart Tips</b><br>
+      <sub>Real-time token-saving strategies per conversation</sub>
+    </td>
+  </tr>
+</table>
+
+---
+
+## 🎬 Playback Controls
+
+Fine-tune exactly how the optimization plays out — same verbs Phaser uses for sprite playback:
+
+```js
+// Pause optimization mid-parse
+optimizer.pause();
+
+// Resume where it left off
+optimizer.resume();
+
+// Restart from frame 0
+optimizer.restart(true, true);
+
+// Chain optimizers back-to-back
+optimizer.chain('tableCompress');
+optimizer.chain('headingNormalize');
+optimizer.chain('finalMarkdown');
+```
+
+<p align="center">
+  <img src="assets/playback-controls.svg" width="900" alt="Playback control patterns — yoyo, pause, timescale, stagger, reverse">
+</p>
+
+### Event Flow
+
+Every parse stage dispatches events — mirroring Phaser's `animationstart` → `animationupdate` → `animationcomplete` flow:
+
+<p align="center">
+  <img src="assets/event-flow.svg" width="900" alt="Animation event flow for the optimization pipeline">
+</p>
+
+```js
+// Fire logic when a specific stage completes
+optimizer.on('complete-tableCompress', (stage, result, ctx) => {
+    contextTracker.simulate(result);
+});
+
+// Fire logic on every token update
+optimizer.on('update', (stage, frame, ctx) => {
+    liveTokenCounter.put(frame.tokens);
+});
+```
+
+---
+
+## ⌨️ Quick Start
 
 ```bash
 # Clone & install
@@ -116,65 +165,25 @@ Open `http://localhost:5173` — upload a file and watch the magic happen.
 
 ---
 
-## 🎯 Features
-
-| | Feature | Detail |
-|---|---|---|
-| 📄 | **10+ Formats** | PDF, DOCX, XLSX, TXT, CSV, MD, and source code |
-| ⚡ | **Token Efficient** | Average **72% size reduction** vs raw input |
-| 🔐 | **Private & Secure** | Zero server-side processing — everything stays local |
-| 🌙 | **Dark Mode** | Automatic + manual toggle with smooth transitions |
-| 📊 | **Context Tracker** | Simulate conversation turns against a 200k window |
-| 🧠 | **Smart Tips** | Real-time token-saving strategies per conversation |
-
----
-
-## 📸 How It Works
-
-```
-┌──────────────┐     ┌───────────────────┐     ┌─────────────────┐
-│   Upload     │────▶│  Smart Optimize   │────▶│  Clean Markdown │
-│   & Parse    │     │   Client-Side     │     │  Ready for LLMs │
-└──────────────┘     └───────────────────┘     └─────────────────┘
-       01                    02                        03
-```
-
-1. **Upload & Parse** — Drag & drop any supported file
-2. **Smart Optimization** — Strip redundancy, compress tables, preserve structure
-3. **Ready for Claude** — Semantic Markdown with minimal token footprint
-
----
-
-## 📐 Before vs After
-
-<div align="center">
-
-| 🔴 Messy Source | 🟢 Clean Markdown |
-|:---:|:---:|
-| ~4,200 tokens | ~1,150 tokens |
-| Raw layout, hidden tables | Semantic headings, clean lists |
-| 3,800 wasted tokens | 72% reduction |
-
-</div>
-
----
-
 ## 🛠 Tech Stack
 
-<p align="center">
-  <img src="https://img.shields.io/badge/React-18.3-61DAFB?style=flat-square&logo=react" alt="React">
-  <img src="https://img.shields.io/badge/Vite-6.0-646CFF?style=flat-square&logo=vite" alt="Vite">
-  <img src="https://img.shields.io/badge/Tailwind-3.4-06B6D4?style=flat-square&logo=tailwindcss" alt="Tailwind">
-  <img src="https://img.shields.io/badge/Supabase-Auth-3ECF8E?style=flat-square&logo=supabase" alt="Supabase">
-  <img src="https://img.shields.io/badge/PDF.js-4.0-FF0000?style=flat-square" alt="PDF.js">
-  <img src="https://img.shields.io/badge/Mammoth-1.8-4C1D95?style=flat-square" alt="Mammoth">
-  <img src="https/img.shields.io/badge/Turndown-7.2-333?style=flat-square" alt="Turndown">
-  <img src="https://img.shields.io/badge/XLSX-0.18-217346?style=flat-square&logo=apache" alt="XLSX">
-</p>
+| Library | Version | Role |
+|---|---|---|
+| **React** | 18.3 | "Game Object" layer — every component is a sprite |
+| **Vite** | 6.0 | Frame loader — instant HMR |
+| **Tailwind** | 3.4 | Styling tokens, not document tokens |
+| **Supabase** | 2.106 | `this.anims` analog — global auth state |
+| **PDF.js** | 4.0 | Parses the PDF spritesheet |
+| **Mammoth** | 1.8 | DOCX → markdown frames |
+| **Turndown** | 7.2 | HTML → markdown frames |
+| **XLSX** | 0.18 | Sheet → table frames |
+| **react-markdown** | 9.0 | Renders the final frames |
 
 ---
 
-## 🎨 Design Tokens
+## 🌙 Design Tokens
+
+Like Phaser's color management, TokenOptimizer ships with design tokens — but for styling, not tokens you pay for.
 
 | Token | Light | Dark |
 |:---|:---:|:---:|
@@ -186,13 +195,39 @@ Open `http://localhost:5173` — upload a file and watch the magic happen.
 
 ---
 
-## 📜 Scripts
+## 📅 Gotchas
+
+1. **Global state is a singleton.** Don't recreate the optimizer in every component — reuse the hook and it stays efficient.
+2. **Infinite loops never complete.** Join a query window with `repeat: -1`? It never fires `complete`. Call `stop()` first.
+3. **Per-stage delay is additive.** Every parse stage adds to the total; keep stages lean.
+4. **Mixing only works with `play()`.** Chain differently-timed pipelines explicitly with `chain()`.
+5. **Local config overrides global.** Component-level overrides take priority over the shared default.
+
+---
+
+## 🔧 Scripts
 
 ```bash
 npm run dev       # Start dev server (http://localhost:5173)
 npm run build     # Production build → dist/
 npm run preview   # Preview production build locally
 ```
+
+---
+
+## 📂 Assets
+
+Attractive animated SVG diagrams live in `assets/` — all are static files with embedded `<animate>` elements (no dependencies):
+
+| File | Shows |
+|---|---|
+| `assets/hero-banner.svg` | Animated hero with live frame cycling + playback bar |
+| `assets/animation-manager.svg` | Manager/State architecture with global→sprite fallback |
+| `assets/spritesheet-flow.svg` | 4-stage format pipeline with progress bar |
+| `assets/chaining-flow.svg` | Parse stages chained like sprite animations |
+| `assets/event-flow.svg` | Event lifecycle with callback signature |
+| `assets/token-comparison.svg` | Before/after token burn-down |
+| `assets/playback-controls.svg` | Yoyo, pause/resume, timescale, stagger, reverse |
 
 ---
 

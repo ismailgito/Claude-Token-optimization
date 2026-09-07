@@ -1,0 +1,129 @@
+<svg width="900" height="280" viewBox="0 0 900 280" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="tcBg" x1="0" y1="0" x2="900" y2="280" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#0e0e10"/>
+      <stop offset="100%" stop-color="#1a1a2e"/>
+    </linearGradient>
+    <linearGradient id="tcRed" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ef4444"/>
+      <stop offset="100%" stop-color="#dc2626"/>
+    </linearGradient>
+    <linearGradient id="tcGreen" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#22c55e"/>
+      <stop offset="100%" stop-color="#16a34a"/>
+    </linearGradient>
+    <filter id="tcGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="3"/>
+      <feMerge>
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <rect width="900" height="280" rx="12" fill="url(#tcBg)"/>
+
+  <text x="450" y="28" text-anchor="middle" font-family="monospace" font-size="11" fill="#d97757" letter-spacing="3" opacity="0.6">FRAME-BY-FRAME TOKEN COMPARISON</text>
+
+  <!-- LEFT: Messy Source -->
+  <g transform="translate(30, 50)">
+    <text x="160" y="0" text-anchor="middle" font-family="monospace" font-size="11" fill="#ef4444" font-weight="bold">MESSY SOURCE</text>
+    <text x="160" y="16" text-anchor="middle" font-family="monospace" font-size="8" fill="#888">~4,200 tokens</text>
+
+    <!-- Token blocks representing raw content -->
+    <g transform="translate(0, 30)">
+      <!-- Row 1 -->
+      <rect x="0" y="0" width="320" height="18" rx="3" fill="#ef4444" opacity="0.12"/>
+      <rect x="0" y="0" width="280" height="18" rx="3" fill="#ef4444" opacity="0.08"/>
+      <rect x="0" y="0" width="320" height="18" rx="3" fill="none" stroke="#ef4444" stroke-width="0.5" opacity="0.3"/>
+      <text x="10" y="12" font-family="monospace" font-size="7" fill="#ef4444" opacity="0.5">raw HTML layout, redundant tags, hidden tables...</text>
+
+      <!-- Row 2 -->
+      <rect x="0" y="24" width="320" height="18" rx="3" fill="#ef4444" opacity="0.1"/>
+      <rect x="0" y="24" width="300" height="18" rx="3" fill="#ef4444" opacity="0.06"/>
+
+      <!-- Row 3 -->
+      <rect x="0" y="48" width="320" height="18" rx="3" fill="#ef4444" opacity="0.12"/>
+      <rect x="0" y="48" width="260" height="18" rx="3" fill="#ef4444" opacity="0.08"/>
+
+      <!-- Row 4 -->
+      <rect x="0" y="72" width="320" height="18" rx="3" fill="#ef4444" opacity="0.1"/>
+      <rect x="0" y="72" width="310" height="18" rx="3" fill="#ef4444" opacity="0.06"/>
+
+      <!-- Row 5 -->
+      <rect x="0" y="96" width="320" height="18" rx="3" fill="#ef4444" opacity="0.12"/>
+      <rect x="0" y="96" width="290" height="18" rx="3" fill="#ef4444" opacity="0.08"/>
+
+      <!-- Wasted tokens indicator -->
+      <g transform="translate(0, 130)">
+        <rect width="320" height="24" rx="4" fill="#ef4444" opacity="0.08"/>
+        <text x="160" y="16" text-anchor="middle" font-family="monospace" font-size="9" fill="#ef4444">3,050 wasted tokens</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- CENTER: Transformation arrow -->
+  <g transform="translate(380, 50)" filter="url(#tcGlow)">
+    <rect x="0" y="50" width="140" height="100" rx="12" fill="#1a1a2e" stroke="#d97757" stroke-width="1.5"/>
+    <text x="70" y="78" text-anchor="middle" font-family="monospace" font-size="9" fill="#d97757">OPTIMIZE</text>
+    <text x="70" y="95" text-anchor="middle" font-family="monospace" font-size="7" fill="#888">client-side</text>
+    <text x="70" y="108" text-anchor="middle" font-family="monospace" font-size="7" fill="#888">token reduction</text>
+    <!-- Animated spinning icon -->
+    <g transform="translate(70, 130)">
+      <circle r="10" fill="none" stroke="#d97757" stroke-width="1" stroke-dasharray="3 2">
+        <animateTransform attributeName="transform" type="rotate" values="0;360" dur="2s" repeatCount="indefinite"/>
+      </circle>
+      <text x="0" y="4" text-anchor="middle" font-family="monospace" font-size="8" fill="#d97757">72%</text>
+    </g>
+
+    <!-- Arrows -->
+    <line x1="-20" y1="100" x2="0" y2="100" stroke="#d97757" stroke-width="1.5" stroke-dasharray="4 3">
+      <animate attributeName="stroke-dashoffset" values="0;-14" dur="1s" repeatCount="indefinite"/>
+    </line>
+    <polygon points="0,100 -8,94 -8,106" fill="#d97757"/>
+    <line x1="140" y1="100" x2="160" y2="100" stroke="#d97757" stroke-width="1.5" stroke-dasharray="4 3">
+      <animate attributeName="stroke-dashoffset" values="0;-14" dur="1s" repeatCount="indefinite" begin="0.5s"/>
+    </line>
+    <polygon points="160,100 152,94 152,106" fill="#d97757"/>
+  </g>
+
+  <!-- RIGHT: Clean Markdown -->
+  <g transform="translate(550, 50)">
+    <text x="160" y="0" text-anchor="middle" font-family="monospace" font-size="11" fill="#22c55e" font-weight="bold">CLEAN MARKDOWN</text>
+    <text x="160" y="16" text-anchor="middle" font-family="monospace" font-size="8" fill="#888">~1,150 tokens</text>
+
+    <g transform="translate(0, 30)">
+      <!-- Row 1 -->
+      <rect x="0" y="0" width="320" height="18" rx="3" fill="#22c55e" opacity="0.12"/>
+      <rect x="0" y="0" width="200" height="18" rx="3" fill="#22c55e" opacity="0.08"/>
+      <rect x="0" y="0" width="320" height="18" rx="3" fill="none" stroke="#22c55e" stroke-width="0.5" opacity="0.3"/>
+      <text x="10" y="12" font-family="monospace" font-size="7" fill="#22c55e" opacity="0.5">semantic headings, clean structure...</text>
+
+      <!-- Row 2 -->
+      <rect x="0" y="24" width="320" height="18" rx="3" fill="#22c55e" opacity="0.1"/>
+      <rect x="0" y="24" width="180" height="18" rx="3" fill="#22c55e" opacity="0.06"/>
+
+      <!-- Row 3 -->
+      <rect x="0" y="48" width="320" height="18" rx="3" fill="#22c55e" opacity="0.12"/>
+      <rect x="0" y="48" width="160" height="18" rx="3" fill="#22c55e" opacity="0.08"/>
+
+      <!-- Row 4 -->
+      <rect x="0" y="72" width="320" height="18" rx="3" fill="#22c55e" opacity="0.1"/>
+      <rect x="0" y="72" width="190" height="18" rx="3" fill="#22c55e" opacity="0.06"/>
+
+      <!-- Saved tokens indicator -->
+      <g transform="translate(0, 130)">
+        <rect width="320" height="24" rx="4" fill="#22c55e" opacity="0.08"/>
+        <text x="160" y="16" text-anchor="middle" font-family="monospace" font-size="9" fill="#22c55e">3,050 tokens saved</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- Bottom stat bar -->
+  <g transform="translate(30, 245)">
+    <rect width="840" height="28" rx="6" fill="#ffffff" opacity="0.03"/>
+    <text x="420" y="18" text-anchor="middle" font-family="monospace" font-size="9" fill="#888">
+      4,200 tokens  →  1,150 tokens  |  72% reduction  |  $0.08 saved per request @ Claude Sonnet
+    </text>
+  </g>
+</svg>
