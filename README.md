@@ -20,48 +20,51 @@
   </a>
 </p>
 
-<p align="center"><b>Turn any document into lean, LLM-ready markdown — frame by frame.</b></p>
+<h1 align="center">Stop Burning Tokens. Start Saving.</h1>
 
----
-
-## ✨ What is TokenOptimizer?
-
-An **AnimationManager** for your text. Where Phaser advances sprites through hand-crafted frame sequences, TokenOptimizer advances your documents through a client-side optimization pipeline that strips redundant frames (padding, fluff, hidden tables) and keeps only the frames the model actually needs.
-
-**PDFs, Word files, Excel sheets, code** — converted fully in-browser into clean, token-efficient markdown that Claude, ChatGPT, and every major model can consume at a fraction of the cost.
-
-> 🔒 **100% private** — every frame is processed in your browser. Nothing ever uploads to a server.
+<p align="center">
+  <b>PDFs, Word files, Excel sheets, code</b> — converted into clean, LLM-optimized markdown.<br>
+  Ready for Claude, ChatGPT, and every major model.
+</p>
 
 <div align="center">
 
-### The Optimization Pipeline
-
-| Frame | Playback State | What Happens |
-|:---:|:---:|:---|
-| 01 | `animationstart` | **Upload & Parse** — drag & drop any supported file |
-| 02 | `animationupdate` | **Smart Optimize** — strip redundancy, compress tables, preserve structure |
-| 03 | `animationcomplete` | **Clean Markdown** — semantic output with minimal token footprint |
+```
+  📄 10+ Formats     ⚡ 72% Token Reduction     🔒 100% Private
+     PDF, DOCX           Average savings           Nothing leaves
+     XLSX, CSV           vs raw document            your browser
+     Code, MD            token count
+```
 
 </div>
 
 ---
 
-## ⚙️ Core Concepts
+## ✨ What is TokenOptimizer?
 
-Just like Phaser's animation system, TokenOptimizer is built on a **manager/state** separation:
+> **An intelligent document optimizer that strips away the noise and keeps only what your LLM needs.**
 
-<p align="center">
-  <img src="assets/animation-manager.svg" width="800" alt="AnimationManager vs AnimationState architecture">
-</p>
+Where a game engine advances sprites through hand-crafted frame sequences, TokenOptimizer advances your documents through a **client-side optimization pipeline** — stripping redundant padding, fluff, hidden tables, and verbose formatting — keeping only the frames the model actually needs.
 
-| Aspect | AnimationManager | TokenOptimizer |
-|---|---|---|
-| Scope | Global — shared across all scenes | Singleton processing core |
-| Access | `this.anims` | `useOptimizer()` hook |
-| Purpose | Create/store animation definitions | Create/store parse pipelines |
-| Lifecycle | Lives for the whole game | Lives for the whole session |
+**All processing happens in your browser.** Nothing ever uploads to a server. Your data stays 100% private.
 
-No duplicate definitions, no re-renders, no wasted tokens.
+---
+
+## 🎬 The Optimization Pipeline
+
+<div align="center">
+
+![Pipeline Architecture](assets/spritesheet-flow.svg)
+
+</div>
+
+Every document passes through a **3-stage animation pipeline**:
+
+| Frame | Stage | What Happens |
+|:---:|:---|:---|
+| `01` | `animationstart` | **Upload & Parse** — drag & drop any supported file; client-side engines extract content |
+| `02` | `animationupdate` | **Smart Optimize** — strip redundancy, compress tables, normalize headings, preserve structure |
+| `03` | `animationcomplete` | **Clean Markdown** — semantic output with minimal token footprint, ready to paste into any LLM |
 
 ---
 
@@ -70,19 +73,22 @@ No duplicate definitions, no re-renders, no wasted tokens.
 <table>
   <tr>
     <td align="center" width="33%">
-      <img src="assets/spritesheet-flow.svg" width="300" alt="Format pipeline like a spritesheet">
-      <br><b>📄 10+ Formats</b><br>
-      <sub>PDF, DOCX, XLSX, TXT, CSV, MD, source code</sub>
+      <br>
+      <b>📄 10+ Format Support</b><br>
+      <sub>PDF, DOCX, XLSX, TXT, CSV, Markdown, and source code</sub><br>
+      <sub>Powered by PDF.js, Mammoth, Turndown, and XLSX</sub>
     </td>
     <td align="center" width="33%">
-      <img src="assets/token-comparison.svg" width="300" alt="Before vs after token comparison">
-      <br><b>⚡ Token Efficient</b><br>
-      <sub>Average <b>72% size reduction</b> vs raw input</sub>
+      <br>
+      <b>⚡ Token Efficient</b><br>
+      <sub>Average <b>72% size reduction</b> vs raw input</sub><br>
+      <sub>Cleaner prompts = cheaper API calls</sub>
     </td>
     <td align="center" width="33%">
-      <img src="assets/chaining-flow.svg" width="300" alt="Chain parse stages like animations">
-      <br><b>🔐 Private & Secure</b><br>
-      <sub>Zero server-side processing — everything stays local</sub>
+      <br>
+      <b>🔐 Private & Secure</b><br>
+      <sub>Zero server-side processing</sub><br>
+      <sub>Everything stays local in your browser</sub>
     </td>
   </tr>
   <tr>
@@ -91,21 +97,48 @@ No duplicate definitions, no re-renders, no wasted tokens.
       <sub>Automatic + manual toggle with smooth transitions</sub>
     </td>
     <td align="center">
-      <b>📊 Context Tracker</b><br>
+      <b>📊 Context Window Tracker</b><br>
       <sub>Simulate conversation turns against a 200k window</sub>
     </td>
     <td align="center">
-      <b>🧠 Smart Tips</b><br>
-      <sub>Real-time token-saving strategies per conversation</sub>
+      <b>🧠 Smart Token-Saving Tips</b><br>
+      <sub>Real-time strategies per conversation</sub>
     </td>
   </tr>
 </table>
 
 ---
 
+## 🏗 Architecture
+
+<div align="center">
+
+![Architecture](assets/animation-manager.svg)
+
+</div>
+
+Built on a **manager/state separation** — inspired by Phaser's animation architecture:
+
+| Aspect | AnimationManager | TokenOptimizer |
+|---|---|---|
+| Scope | Global — shared across all scenes | Singleton processing core |
+| Access | `this.anims` | `useOptimizer()` hook |
+| Purpose | Create/store animation definitions | Create/store parse pipelines |
+| Lifecycle | Lives for the whole game | Lives for the whole session |
+
+**No duplicate definitions, no re-renders, no wasted tokens.**
+
+---
+
 ## 🎬 Playback Controls
 
 Fine-tune exactly how the optimization plays out — same verbs Phaser uses for sprite playback:
+
+<div align="center">
+
+![Playback Controls](assets/playback-controls.svg)
+
+</div>
 
 ```js
 // Pause optimization mid-parse
@@ -123,17 +156,15 @@ optimizer.chain('headingNormalize');
 optimizer.chain('finalMarkdown');
 ```
 
-<p align="center">
-  <img src="assets/playback-controls.svg" width="900" alt="Playback control patterns — yoyo, pause, timescale, stagger, reverse">
-</p>
-
 ### Event Flow
 
 Every parse stage dispatches events — mirroring Phaser's `animationstart` → `animationupdate` → `animationcomplete` flow:
 
-<p align="center">
-  <img src="assets/event-flow.svg" width="900" alt="Animation event flow for the optimization pipeline">
-</p>
+<div align="center">
+
+![Event Flow](assets/event-flow.svg)
+
+</div>
 
 ```js
 // Fire logic when a specific stage completes
@@ -149,11 +180,21 @@ optimizer.on('update', (stage, frame, ctx) => {
 
 ---
 
+## 📊 Token Comparison
+
+<div align="center">
+
+![Token Comparison](assets/token-comparison.svg)
+
+</div>
+
+---
+
 ## ⌨️ Quick Start
 
 ```bash
 # Clone & install
-git clone https://github.com/<user>/token-optimizer.git
+git clone https://github.com/<your-username>/token-optimizer.git
 cd token-optimizer
 npm install
 
@@ -161,7 +202,15 @@ npm install
 npm run dev
 ```
 
-Open `http://localhost:5173` — upload a file and watch the magic happen.
+Open **`http://localhost:5173`** — upload a file and watch the magic happen.
+
+### Available Scripts
+
+```bash
+npm run dev       # Start dev server
+npm run build     # Production build → dist/
+npm run preview   # Preview production build locally
+```
 
 ---
 
@@ -169,15 +218,56 @@ Open `http://localhost:5173` — upload a file and watch the magic happen.
 
 | Library | Version | Role |
 |---|---|---|
-| **React** | 18.3 | "Game Object" layer — every component is a sprite |
-| **Vite** | 6.0 | Frame loader — instant HMR |
-| **Tailwind** | 3.4 | Styling tokens, not document tokens |
-| **Supabase** | 2.106 | `this.anims` analog — global auth state |
-| **PDF.js** | 4.0 | Parses the PDF spritesheet |
-| **Mammoth** | 1.8 | DOCX → markdown frames |
-| **Turndown** | 7.2 | HTML → markdown frames |
-| **XLSX** | 0.18 | Sheet → table frames |
-| **react-markdown** | 9.0 | Renders the final frames |
+| **React** | 18.3 | Component layer — every UI element is a "sprite" |
+| **Vite** | 6.0 | Lightning-fast HMR and bundling |
+| **Tailwind** | 3.4 | Utility-first styling with design tokens |
+| **Supabase** | 2.106 | Global auth state management |
+| **PDF.js** | 4.0 | Client-side PDF parsing |
+| **Mammoth** | 1.8 | DOCX → clean content conversion |
+| **Turndown** | 7.2 | HTML → Markdown frame conversion |
+| **XLSX** | 0.18 | Spreadsheet → table frame conversion |
+| **react-markdown** | 9.0 | Renders the final optimized markdown |
+| **lucide-react** | 0.468 | Beautiful, consistent iconography |
+
+---
+
+## 📁 Project Structure
+
+```
+token-optimizer/
+├── assets/                    # Animated SVG diagrams
+│   ├── hero-banner.svg        # Hero with live frame cycling
+│   ├── animation-manager.svg  # Manager/State architecture
+│   ├── spritesheet-flow.svg   # 4-stage format pipeline
+│   ├── chaining-flow.svg      # Parse stages chained
+│   ├── event-flow.svg         # Event lifecycle
+│   ├── token-comparison.svg   # Before/after comparison
+│   └── playback-controls.svg  # Control patterns
+├── src/
+│   ├── components/
+│   │   ├── Header.jsx         # Navigation + theme toggle
+│   │   ├── FileUploader.jsx   # Drag & drop interface
+│   │   ├── ProcessingProgress.jsx  # Live progress bar
+│   │   ├── OptimizationSummary.jsx # Stats dashboard
+│   │   ├── MarkdownPreview.jsx     # Rendered output
+│   │   ├── HowItWorks.jsx          # Feature showcase
+│   │   ├── ContextWindowTracker.jsx # Token calculator
+│   │   ├── FileSizeWarning.jsx     # Size alerts
+│   │   └── AuthModal.jsx          # Auth UI
+│   ├── hooks/
+│   │   ├── useFileConversion.js   # Core conversion logic
+│   │   └── useUsage.js           # Usage tracking
+│   ├── lib/
+│   │   └── supabase.js           # Supabase client
+│   ├── utils/
+│   │   └── fileUtils.js          # File helpers
+│   ├── App.jsx                   # Main application
+│   └── main.jsx                  # Entry point
+├── package.json
+├── vite.config.js
+├── tailwind.config.js
+└── postcss.config.js
+```
 
 ---
 
@@ -205,32 +295,24 @@ Like Phaser's color management, TokenOptimizer ships with design tokens — but 
 
 ---
 
-## 🔧 Scripts
+## 🤝 Contributing
 
-```bash
-npm run dev       # Start dev server (http://localhost:5173)
-npm run build     # Production build → dist/
-npm run preview   # Preview production build locally
-```
+Contributions are welcome! Feel free to open issues or submit PRs.
 
----
-
-## 📂 Assets
-
-Attractive animated SVG diagrams live in `assets/` — all are static files with embedded `<animate>` elements (no dependencies):
-
-| File | Shows |
-|---|---|
-| `assets/hero-banner.svg` | Animated hero with live frame cycling + playback bar |
-| `assets/animation-manager.svg` | Manager/State architecture with global→sprite fallback |
-| `assets/spritesheet-flow.svg` | 4-stage format pipeline with progress bar |
-| `assets/chaining-flow.svg` | Parse stages chained like sprite animations |
-| `assets/event-flow.svg` | Event lifecycle with callback signature |
-| `assets/token-comparison.svg` | Before/after token burn-down |
-| `assets/playback-controls.svg` | Yoyo, pause/resume, timescale, stagger, reverse |
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
 ---
 
 ## 📜 License
 
 MIT © TokenOptimizer
+
+---
+
+<p align="center">
+  <i>Built for efficiency. All processing happens locally in your browser.</i>
+</p>
