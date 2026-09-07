@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <rect width="200" height="200" rx="12" fill="#0f172a"/>
+  <text x="100" y="28" text-anchor="middle" fill="#94a3b8" font-family="monospace" font-size="11" letter-spacing="2">FRAME CALLBACK</text>
+  <g transform="translate(20,50)">
+    <rect x="0" y="0" width="160" height="28" rx="4" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+    <rect x="4" y="4" width="28" height="20" rx="2" fill="#ef4444" opacity="0.8"/>
+    <rect x="36" y="4" width="28" height="20" rx="2" fill="#f97316" opacity="0.8"/>
+    <rect x="68" y="4" width="28" height="20" rx="2" fill="#f59e0b" opacity="0.8"/>
+    <rect x="100" y="4" width="28" height="20" rx="2" fill="#22c55e" opacity="0.8"/>
+    <rect x="132" y="4" width="24" height="20" rx="2" fill="#3b82f6" opacity="0.8"/>
+    <circle cx="100" cy="14" r="8" fill="none" stroke="#a855f7" stroke-width="2" stroke-dasharray="3,2">
+      <animate attributeName="r" values="8;10;8" dur="1s" repeatCount="indefinite"/>
+    </circle>
+    <text x="100" y="18" text-anchor="middle" fill="#a855f7" font-family="monospace" font-size="7">hit</text>
+  </g>
+  <text x="100" y="92" text-anchor="middle" fill="#475569" font-family="monospace" font-size="8">frame.index === 4</text>
+  <g transform="translate(30,110)">
+    <rect x="0" y="0" width="140" height="50" rx="6" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+    <text x="70" y="20" text-anchor="middle" fill="#94a3b8" font-family="monospace" font-size="8">animationupdate</text>
+    <text x="70" y="36" text-anchor="middle" fill="#64748b" font-family="monospace" font-size="7">(anim, frame, obj, key)</text>
+    <line x1="20" y1="42" x2="60" y2="42" stroke="#22c55e" stroke-width="1"/>
+    <text x="40" y="55" text-anchor="middle" fill="#22c55e" font-family="monospace" font-size="7">per frame</text>
+    <line x1="80" y1="42" x2="120" y2="42" stroke="#3b82f6" stroke-width="1"/>
+    <text x="100" y="55" text-anchor="middle" fill="#3b82f6" font-family="monospace" font-size="7">every tick</text>
+  </g>
+  <g transform="translate(60,172)">
+    <rect x="-40" y="-8" width="80" height="16" rx="4" fill="#1e293b" stroke="#f59e0b" stroke-width="1"/>
+    <text x="0" y="3" text-anchor="middle" fill="#f59e0b" font-family="monospace" font-size="7">perFrame: 50ms</text>
+  </g>
+</svg>
