@@ -27,6 +27,161 @@ A modern, browser-based tool designed to convert PDFs, Word documents, spreadshe
 
 ---
 
+## ✨ Live Preview & Animations
+
+<p align="center">
+  <img src="https://img.shields.io/badge/status-optimizing-22c55e?style=for-the-badge&logo=leaflet&logoColor=white" />
+  <img src="https://img.shields.io/badge/tokens-saved-90%25-3b82f6?style=for-the-badge&logo=openai&logoColor=white" />
+  <img src="https://img.shields.io/badge/privacy-100%25-a855f7?style=for-the-badge&logo=shield&logoColor=white" />
+</p>
+
+### 🔄 Real-Time Conversion Pipeline
+<p align="center">
+  <img alt="File In" src="https://img.shields.io/badge/📁_INPUT-File-blueviolet?style=flat-square&logoColor=white" />
+  <img alt="arrow" src="https://img.shields.io/badge/➡️-0ea5e9?style=flat-square" />
+  <img alt="Processing" src="https://img.shields.io/badge/⚙️_PROCESS-Optimize-f59e0b?style=flat-square&logoColor=white" />
+  <img alt="arrow" src="https://img.shields.io/badge/➡️-0ea5e9?style=flat-square" />
+  <img alt="Output" src="https://img.shields.io/badge/📤_OUTPUT-Clean_MD-10b981?style=flat-square&logoColor=white" />
+</p>
+
+<br>
+
+<div align="center">
+
+### 🎬 Animated Feature Showcase
+
+<table>
+<tr>
+<td align="center" width="50%">
+
+**📥 Smart File Upload**
+<div style="position:relative;width:100%;max-width:320px;height:140px;margin:14px auto;border-radius:14px;background:linear-gradient(135deg,#0f172a,#1e293b);border:1px solid #334155;overflow:hidden;">
+  <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:74px;height:90px;border-radius:8px;background:linear-gradient(160deg,#ef4444,#dc2626);box-shadow:0 8px 24px rgba(239,68,68,.4);animation:docFloat 3s ease-in-out infinite;"></div>
+  <div style="position:absolute;top:14px;left:14px;font-family:monospace;color:#94a3b8;font-size:11px;animation:scanLine 2s linear infinite;">scanning...</div>
+  <div style="position:absolute;bottom:0;left:0;height:3px;background:linear-gradient(90deg,#22c55e,#3b82f6,#a855f7);animation:progressScan 3s ease-in-out infinite;width:100%;"></div>
+  <div style="position:absolute;top:50%;left:50%;width:200px;height:200px;border:2px dashed #22c55e;border-radius:50%;transform:translate(-50%,-50%);animation:radarPulse 2.5s ease-out infinite;opacity:0.6;"></div>
+  <div style="position:absolute;top:50%;left:50%;width:120px;height:120px;border:2px dashed #3b82f6;border-radius:50%;transform:translate(-50%,-50%);animation:radarPulse 2.5s ease-out infinite;animation-delay:0.8s;opacity:0.6;"></div>
+</div>
+
+</td>
+<td align="center" width="50%">
+
+**🪙 Token Compression**
+<div style="position:relative;width:100%;max-width:320px;height:140px;margin:14px auto;border-radius:14px;background:radial-gradient(circle at center,#1e293b,#020617);border:1px solid #334155;overflow:hidden;">
+  <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:'Courier New',monospace;font-size:60px;font-weight:900;color:#22c55e;text-shadow:0 0 30px #22c55e;animation:tokenCount 2s ease-in-out infinite;">90%</div>
+  <div style="position:absolute;bottom:18px;left:50%;transform:translateX(-50%);font-family:monospace;color:#64748b;font-size:10px;letter-spacing:2px;">SMALLER</div>
+  <div style="position:absolute;width:6px;height:6px;background:#22c55e;border-radius:50%;box-shadow:0 0 8px #22c55e;top:50%;left:50%;animation:coinBurst 2.5s ease-out infinite;"></div>
+  <div style="position:absolute;width:4px;height:4px;background:#3b82f6;border-radius:50%;box-shadow:0 0 6px #3b82f6;top:50%;left:50%;animation:coinBurst 2.5s ease-out infinite;animation-delay:0.4s;"></div>
+  <div style="position:absolute;width:5px;height:5px;background:#a855f7;border-radius:50%;box-shadow:0 0 7px #a855f7;top:50%;left:50%;animation:coinBurst 2.5s ease-out infinite;animation-delay:0.8s;"></div>
+  <div style="position:absolute;width:3px;height:3px;background:#f59e0b;border-radius:50%;box-shadow:0 0 5px #f59e0b;top:50%;left:50%;animation:coinBurst 2.5s ease-out infinite;animation-delay:1.2s;"></div>
+  <div style="position:absolute;width:4px;height:4px;background:#ec4899;border-radius:50%;box-shadow:0 0 6px #ec4899;top:50%;left:50%;animation:coinBurst 2.5s ease-out infinite;animation-delay:1.6s;"></div>
+</div>
+
+</td>
+</tr>
+<tr>
+<td align="center">
+
+**🔒 Privacy Shield**
+<div style="position:relative;width:100%;max-width:320px;height:140px;margin:14px auto;border-radius:14px;background:linear-gradient(135deg,#1e1b4b,#312e81);border:1px solid #4f46e5;overflow:hidden;">
+  <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:48px;animation:shieldGlow 2s ease-in-out infinite;filter:drop-shadow(0 0 12px #6366f1);">🛡️</div>
+  <div style="position:absolute;width:100%;height:100%;border:2px solid #6366f1;border-radius:14px;animation:shieldRing 3s ease-out infinite;opacity:0;"></div>
+  <div style="position:absolute;width:100%;height:100%;border:2px solid #a855f7;border-radius:14px;animation:shieldRing 3s ease-out infinite;animation-delay:1s;opacity:0;"></div>
+  <div style="position:absolute;top:8px;left:50%;transform:translateX(-50%);font-family:monospace;color:#a5b4fc;font-size:9px;letter-spacing:3px;animation:textFlicker 4s linear infinite;">100% LOCAL</div>
+</div>
+
+</td>
+<td align="center">
+
+**⚡ Format Engine**
+<div style="position:relative;width:100%;max-width:320px;height:140px;margin:14px auto;border-radius:14px;background:linear-gradient(135deg,#1a1a2e,#16213e);border:1px solid #334155;overflow:hidden;">
+  <div style="position:absolute;inset:14px;display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(2,1fr);gap:6px;">
+    <div style="background:linear-gradient(135deg,#ef4444,#dc2626);border-radius:6px;animation:formatPop 3s ease-in-out infinite;display:flex;align-items:center;justify-content:center;color:white;font-size:10px;font-weight:700;font-family:monospace;">PDF</div>
+    <div style="background:linear-gradient(135deg,#3b82f6,#2563eb);border-radius:6px;animation:formatPop 3s ease-in-out infinite;animation-delay:0.2s;display:flex;align-items:center;justify-content:center;color:white;font-size:10px;font-weight:700;font-family:monospace;">DOCX</div>
+    <div style="background:linear-gradient(135deg,#22c55e,#16a34a);border-radius:6px;animation:formatPop 3s ease-in-out infinite;animation-delay:0.4s;display:flex;align-items:center;justify-content:center;color:white;font-size:10px;font-weight:700;font-family:monospace;">XLSX</div>
+    <div style="background:linear-gradient(135deg,#a855f7,#9333ea);border-radius:6px;animation:formatPop 3s ease-in-out infinite;animation-delay:0.6s;display:flex;align-items:center;justify-content:center;color:white;font-size:10px;font-weight:700;font-family:monospace;">HTML</div>
+    <div style="background:linear-gradient(135deg,#f59e0b,#d97706);border-radius:6px;animation:formatPop 3s ease-in-out infinite;animation-delay:0.8s;display:flex;align-items:center;justify-content:center;color:white;font-size:10px;font-weight:700;font-family:monospace;">JSON</div>
+    <div style="background:linear-gradient(135deg,#ec4899,#db2777);border-radius:6px;animation:formatPop 3s ease-in-out infinite;animation-delay:1.0s;display:flex;align-items:center;justify-content:center;color:white;font-size:10px;font-weight:700;font-family:monospace;">CSV</div>
+    <div style="background:linear-gradient(135deg,#06b6d4,#0891b2);border-radius:6px;animation:formatPop 3s ease-in-out infinite;animation-delay:1.2s;display:flex;align-items:center;justify-content:center;color:white;font-size:10px;font-weight:700;font-family:monospace;">XML</div>
+    <div style="background:linear-gradient(135deg,#8b5cf6,#7c3aed);border-radius:6px;animation:formatPop 3s ease-in-out infinite;animation-delay:1.4s;display:flex;align-items:center;justify-content:center;color:white;font-size:10px;font-weight:700;font-family:monospace;">PNG</div>
+  </div>
+</div>
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="center">
+
+**🌊 Continuous Processing Flow**
+<div style="position:relative;width:100%;max-width:660px;height:70px;margin:14px auto;border-radius:35px;background:linear-gradient(90deg,#0f172a,#1e293b,#0f172a);border:1px solid #334155;overflow:hidden;">
+  <div style="position:absolute;inset:0;background:linear-gradient(90deg,transparent,#22c55e,transparent);animation:waveFlow 2.5s linear infinite;opacity:0.5;"></div>
+  <div style="position:absolute;inset:0;background:linear-gradient(90deg,transparent,#3b82f6,transparent);animation:waveFlow 2.5s linear infinite;animation-delay:0.8s;opacity:0.4;"></div>
+  <div style="position:absolute;inset:0;background:linear-gradient(90deg,transparent,#a855f7,transparent);animation:waveFlow 2.5s linear infinite;animation-delay:1.6s;opacity:0.3;"></div>
+  <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:monospace;color:#cbd5e1;font-size:14px;letter-spacing:4px;font-weight:600;text-shadow:0 0 12px #22c55e;animation:textGlow 2s ease-in-out infinite;">PROCESSING · OPTIMIZING · STREAMING</div>
+</div>
+
+</td>
+</tr>
+</table>
+
+</div>
+
+<style>
+@keyframes docFloat {
+  0%, 100% { transform: translate(-50%, -50%) rotate(-3deg); }
+  50% { transform: translate(-50%, -50%) rotate(3deg); }
+}
+@keyframes scanLine {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
+}
+@keyframes progressScan {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+@keyframes radarPulse {
+  0% { transform: translate(-50%, -50%) scale(0.3); opacity: 0.8; }
+  100% { transform: translate(-50%, -50%) scale(1.5); opacity: 0; }
+}
+@keyframes tokenCount {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); }
+  50% { transform: translate(-50%, -50%) scale(1.08); }
+}
+@keyframes coinBurst {
+  0% { transform: translate(-50%, -50%); opacity: 1; }
+  100% { transform: translate(-50%, -180px); opacity: 0; }
+}
+@keyframes shieldGlow {
+  0%, 100% { filter: drop-shadow(0 0 12px #6366f1); }
+  50% { filter: drop-shadow(0 0 24px #a855f7); }
+}
+@keyframes shieldRing {
+  0% { transform: scale(0.9); opacity: 0.8; }
+  100% { transform: scale(1.3); opacity: 0; }
+}
+@keyframes textFlicker {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+@keyframes formatPop {
+  0%, 100% { transform: scale(1); box-shadow: 0 0 0 currentColor; }
+  50% { transform: scale(1.08); box-shadow: 0 4px 14px rgba(0,0,0,.4); }
+}
+@keyframes waveFlow {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+@keyframes textGlow {
+  0%, 100% { text-shadow: 0 0 12px #22c55e; }
+  50% { text-shadow: 0 0 24px #3b82f6, 0 0 12px #a855f7; }
+}
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; }
+}
+</style>
+
+---
+
 ## 📂 Supported Formats
 
 | Category | Supported Formats | Engine/Library |
